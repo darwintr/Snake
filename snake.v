@@ -1,3 +1,9 @@
+//RESETN = SW[0]
+
+//KEY[3:0] will be directions. UP DOWN LEFT RIGHT
+
+//COLOR is SW[9:7](Changes body color, head will always be red)
+
 
 module snake
 	(
@@ -31,16 +37,28 @@ module snake
 	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
 	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
 	
-	wire resetn;
-	assign resetn = KEY[0];
-	
-	// Create the colour, x, y and writeEn wires that are inputs to the controller.
-	wire [2:0] colour = SW[9:7];
+	wire resetn = SW[0];
+	wire [2:0] colour_in = SW[2:0];
+	wire [2:0] colour;
 	wire [7:0] x;
 	wire [6:0] y;
-	wire writeEn;
-	wire ld_x, ld_y;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.
