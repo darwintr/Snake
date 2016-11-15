@@ -2,19 +2,20 @@ module control(
 		input [3:0] dirControl,
 		input clk,
 		input reset_n;
-		input [2:0] colour_in,
 		output reg [7:0] x_out,
 		output reg [6:0] y_out,
-		output go,
-		output reg [2:0] colour_out
+		output reg go,
+		output reg [1:0] status,
 	);
 	wire [1:0] dir;
-	dirControl u0(
+	dirControl directionalControl(
 		dirControl,
 		dir
 	);
 	
-	
+	ram ramUnit(
+		
+	);
 	
 
 
