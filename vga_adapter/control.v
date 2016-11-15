@@ -7,14 +7,31 @@ module control(
 		output reg go,
 		output reg [1:0] status,
 	);
+
+	
+	
+	//DIRECTIONAL DATA.
 	wire [1:0] dir;
 	dirControl directionalControl(
 		dirControl,
 		dir
 	);
+	//END DIRECTIONAL DATA
+
+
+	reg [10:0] snakeLength;
+	reg [1:0] status_in;
+	reg wren;
+	
+	localparam UPDATE = 0, DRAW = 1;
+
 	
 	ram ramUnit(
-		
+		{x_out, y_out},
+		clk,
+		status_in,
+		wren,
+		status_out
 	);
 	
 
