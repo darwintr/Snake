@@ -6,6 +6,6 @@ log {/*}
 add wave {/*}
 
 force {clk} 0 0 ns, 1 10 ns -r 20 ns
-force {dirControl} 1000 0 ns, 0100 21 ns, 0010 41 ns, 0001 61 ns
+force {dirControl} 0111 0 ns, 1011 21 ns, 1101 41 ns, 1110 61 ns
 
 run 80ns
