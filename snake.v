@@ -1,8 +1,5 @@
-`include "datapath.v"
-`include "control.v"
 
-
-module part2
+module snake
 	(
 		CLOCK_50,						//	On Board 50 MHz
 		// Your inputs and outputs here
@@ -70,30 +67,6 @@ module part2
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
-    
-    // Instansiate datapath
-	// datapath d0(...);
-	datapath d0(
-		CLOCK_50,
-		writeEn,
-		ld_x,
-		ld_y,
-		SW[6:0],
-		reset_n,
-		x,
-		y
-	);
-    // Instansiate FSM control
-    // control c0(...);
-    control c0(
-    	KEY[3],
-        KEY[1],
-        reset_n, 
-        CLOCK_50,
-        writeEn,
-        ld_x,
-        ld_y
-    );
 
 
 endmodule
