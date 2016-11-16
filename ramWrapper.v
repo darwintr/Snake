@@ -1,9 +1,8 @@
 `include "ram.v"
-
-
 module ramDataPath(
 	input [10:0] address,
 	input wren,
+	input clk,
 	input [16:0] data,
 	output [7:0] x,
 	output [6:0] y,
@@ -57,14 +56,14 @@ module ramControl(
 	wire [7:0] defaultX = 8'd20;
 	wire [6:0] defaultY = 7'd10;
 	//00 is body, 01 is head
-	wire [1:0] defaultType = address == 0 ? 2'b01 : 2'b00; 
+	reg [1:0] defaultType; 
 	
 	reg [16:0] curr, prev;
 
 	always @(*)
 	begin: stateTable
 		case (currState)
-			L_DEFAULT: nextState = resetCount == defaultLength ? STORE_INI : L_DEFAULT;
+			L_DEFAULT: nextState = resetCount == defaultLength ? WAIT : L_DEFAULT;
 			STORE_INI: nextState = UPDATE_PREV;
 			UPDATE_PREV: nextState = STORE_REG_INTO_CURR;
 			STORE_REG_INTO_CURR: nextState = STORE_PREV_INTO_REG;
@@ -75,7 +74,7 @@ module ramControl(
 		endcase
 	end
 
-	always @(posedge clk or posedge go)
+	always @(posedge clk or posedge go or negedge reset_n)
 	begin
 		if (!reset_n)
 		begin
@@ -119,7 +118,7 @@ module ramControl(
 
 
 	
-	always @(posedge clk)
+	always @(posedge clk or negedge reset_n)
 	begin
 		if (!reset_n)
 		begin
@@ -127,6 +126,7 @@ module ramControl(
 			prev <= 0;
 			data <= 0;
 			wren <= 0;
+			defaultType <= 2'b01;
 		end
 		else
 		begin
@@ -134,6 +134,7 @@ module ramControl(
 				L_DEFAULT: begin
 					data <= {defaultType, {defaultX, defaultY + address[6:0]}};
 					wren <= 1;
+					defaultType <= 0;
 				end
 				STORE_INI: begin	
 					wren <= 0;
@@ -144,13 +145,20 @@ module ramControl(
 	//dirOut[1] == 0 => up and dirOut[0] == 0 => Left.
 					if (dir[2]) 
 					begin
-						prev[14:7] <= prev[14:7] + dir[0] ? 1 : - 1;
+						if (dir[0])
+							prev <= {prev[16:15], {prev[14:7] + 1, prev[6:0]}};
+						else 
+							prev <= {prev[16:15], {prev[14:7] - 1, prev[6:0]}};
 					end
 					else
-						prev[6:0] <= prev[6:0] + dir[1] ? -1 : 1;
+						if (dir[1])
+							prev <= prev - 1;
+						else
+							prev <= prev + 1;
 				end
 				STORE_REG_INTO_CURR: begin
 					curr <= q;
+					//curr [16:15] <= 0;
 					wren <= 0;
 				end
 				STORE_PREV_INTO_REG: begin

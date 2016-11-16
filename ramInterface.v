@@ -1,12 +1,11 @@
 `include "ramWrapper.v"
-`include "ram.v"
 
 module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 	input [3:0] dirControl;
 	input clk;
 	input reset_n;
 	output [7:0] x_out;
-	output [6:0] y_out;;
+	output [6:0] y_out;
 	output plot;
 	output [1:0] status;
 
@@ -17,8 +16,17 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 	wire [2:0] dir;
 	wire [10:0] address;
 	wire wren;
+
+	wire [16:0] q;
+	wire [16:0] data;
+	wire [1:0] type;
+
+	assign plot = wren;
+	assign status = type;
+
 	dirControl directionalControl(
 		dirControl,
+		reset_n,
 		dir
 	);
 	//END DIRECTIONAL DATA
@@ -26,7 +34,7 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 
 
 	//RATE DIVIDERS
-	rate_divider gameClock (
+	rate_divider gameTick (
 		clk,
 		reset_n,
 		20'd200,
@@ -41,7 +49,8 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 		fourClock
 	);
 
-	wire [16:0] q;
+
+
 	ramControl control(
 		fourClock, //THIS CLOCK IS RATE DIVIDED BY 4!
 		reset_n,
@@ -56,6 +65,7 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 	ramDataPath datapath(
 		address,
 		wren,
+		clk,
 		data,
 		x_out,
 		y_out,
@@ -72,8 +82,14 @@ endmodule
 //dirOut[1] == 0 => up and dirOut[0] == 0 => Left.
 module dirControl(
 		input [3:0] dir,
+		input reset_n,
 		output reg [2:0] dirOut
 	);
+
+	always @(negedge reset_n)
+	begin
+		dirOut <= 0;
+	end
 	// LEFT
 	always @(negedge dir[3])
 	begin
