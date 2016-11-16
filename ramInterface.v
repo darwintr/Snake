@@ -14,7 +14,7 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 	wire gameClock;
 	wire fourClock;
 	//DIRECTIONAL DATA.
-	wire [1:0] dir;
+	wire [2:0] dir;
 	wire [10:0] address;
 	wire wren;
 	dirControl directionalControl(
@@ -30,7 +30,7 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 		clk,
 		reset_n,
 		20'd200,
-		//20'd138889, 
+		//20'd3_333_333, 
 		gameClock
 	);
 
@@ -40,8 +40,9 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 		20'd4,
 		fourClock
 	);
+
 	wire [16:0] q;
-	ramControl ramPart1(
+	ramControl control(
 		fourClock, //THIS CLOCK IS RATE DIVIDED BY 4!
 		reset_n,
 		gameClock,
@@ -52,7 +53,7 @@ module ramInterface(dirControl, clk, reset_n, x_out,	y_out, plot, status);
 		address
 	);
 
-	ramDataPath ramOut(
+	ramDataPath datapath(
 		address,
 		wren,
 		data,
@@ -71,26 +72,34 @@ endmodule
 //dirOut[1] == 0 => up and dirOut[0] == 0 => Left.
 module dirControl(
 		input [3:0] dir,
-		output reg [1:0] dirOut
+		output reg [2:0] dirOut
 	);
+	// LEFT
 	always @(negedge dir[3])
 	begin
 		dirOut[1] <= 0;
+		dirOut[2] <= 1;
 	end
 
+	// RIGHT
 	always @(negedge dir[2])
 	begin
 		dirOut[1] <= 1;
+		dirOut[2] <= 1;
 	end
 
+	// UP
 	always @(negedge dir[1])
 	begin
 		dirOut[0] <= 0;
+		dirOut[2] <= 0;
 	end
 
+	// DOWN
 	always @(negedge dir[0])
 	begin
 		dirOut[0] <= 1;
+		dirOut[2] <= 0;
 	end
 
 endmodule

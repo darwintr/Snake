@@ -32,7 +32,7 @@ module ramControl(
 	input clk, //THIS CLOCK IS RATE DIVIDED BY 4!
 	input reset_n,
 	input go,
-	input [1:0] dir,
+	input [2:0] dir,
 	input [16:0] q,
 	output reg wren,
 	output reg [16:0] data,
@@ -53,6 +53,13 @@ module ramControl(
 	reg [10:0] currentLength;
 	reg [10:0] resetCount;
 	reg [10:0] cnt;
+
+	wire [7:0] defaultX = 8'd20;
+	wire [6:0] defaultY = 7'd10;
+	//00 is body, 01 is head
+	wire [1:0] defaultType = address == 0 ? 2'b01 : 2'b00; 
+	
+	reg [16:0] curr, prev;
 
 	always @(*)
 	begin: stateTable
@@ -78,44 +85,43 @@ module ramControl(
 			resetCount <= 0;
 			currState <= L_DEFAULT;
 		end
-
-		if (go)
-			currState = STORE_INI;
-		else
-			currState <= nextState;
-
-
-		//-------------GROUP-----------
-		if (currState == L_DEFAULT)
+		else 
 		begin
-			resetCount <= resetCount + 1;
-			address <= resetCount;
+			if (go)
+				currState <= STORE_INI;
+			else
+				currState <= nextState;
+
+			//-------------GROUP-----------
+			if (currState == L_DEFAULT)
+			begin
+				resetCount <= resetCount + 1;
+				address <= resetCount;
+			end
+			else if (currState == STORE_CURR_INTO_PREV)
+			begin
+				cnt <= cnt + 1;
+				address <= cnt;
+			end
+			else begin
+				resetCount <= 0;
+			end
+			//---------------GROUP-----------
+			if (currState == WAIT) 
+			begin
+				cnt <= 0;
+				address <= 0;
+			end
+
 		end
-		else if (currState == STORE_CURR_INTO_PREV)
-		begin
-			cnt <= cnt + 1;
-			address <= resetCount;
-		end
-		else begin
-			resetCount <= 0;
-			address <= 0;
-		end
-		//---------------GROUP-----------
-		if (currState == WAIT)
-			cnt <= 0;
 	end
 	
-	wire [7:0] defaultX = 8'd20;
-	wire [6:0] defaultY = 7'd10;
-	//00 is body, 01 is head
-	wire [1:0] defaultType = address == 0 ? 2'b01 : 2'b00; 
-	
-	reg [16:0] curr, prev;
+
 
 	
 	always @(posedge clk)
 	begin
-		if (reset_n)
+		if (!reset_n)
 		begin
 			curr <= 0;
 			prev <= 0;
@@ -126,7 +132,6 @@ module ramControl(
 		begin
 			case (currState)
 				L_DEFAULT: begin
-					
 					data <= {defaultType, {defaultX, defaultY + address[6:0]}};
 					wren <= 1;
 				end
@@ -137,8 +142,12 @@ module ramControl(
 				UPDATE_PREV: begin
 					wren <= 0;
 	//dirOut[1] == 0 => up and dirOut[0] == 0 => Left.
-					prev[14:7] <= prev[14:7] + dir[0] ? 1 : - 1;
-					prev[6:0] <= prev[6:0] + dir[1] ? -1 : 1;
+					if (dir[2]) 
+					begin
+						prev[14:7] <= prev[14:7] + dir[0] ? 1 : - 1;
+					end
+					else
+						prev[6:0] <= prev[6:0] + dir[1] ? -1 : 1;
 				end
 				STORE_REG_INTO_CURR: begin
 					curr <= q;
