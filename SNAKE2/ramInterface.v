@@ -1,14 +1,16 @@
 `include "control.v"
 `include "datapath.v"
+`include "drawBlack.v"
 
-module ramInterface(dirControl, clk, reset_n, x_out, y_out, plot);
+module ramInterface(dirControl, clk, reset_n, colour_in, colour_out, x_out, y_out, plot);
 	input [3:0] dirControl;
 	input clk;
 	input reset_n;
+	input [2:0] colour_in;
+	output [2:0] colour_out;
 	output [7:0] x_out;
 	output [6:0] y_out;
 	output plot;
-
 
 	wire gameClock;
 	//DIRECTIONAL DATA.
@@ -16,8 +18,10 @@ module ramInterface(dirControl, clk, reset_n, x_out, y_out, plot);
 	wire wren;
 	wire ld;
 	wire update;
+	wire dbWren;
+	wire [7:0] d_x, b_x;
+	wire [6:0] d_y, b_y;
 
-	assign plot = wren;
 
 	dirControl directionalControl(
 		dirControl,
@@ -32,11 +36,16 @@ module ramInterface(dirControl, clk, reset_n, x_out, y_out, plot);
 	rate_divider gameTick (
 		clk,
 		reset_n,
-		20'd80,
-		//20'd3_333_333, 
+		//20'd80,
+		20'd3_333_333, 
 		gameClock
 	);
 
+	drawBlackControl dbControl (
+		clk,
+		reset_n,
+		dbWren
+	);
 
 
 	control controlUnit(
@@ -55,15 +64,73 @@ module ramInterface(dirControl, clk, reset_n, x_out, y_out, plot);
 		dir,
 		update,
 		reset_n,
-		x_out,
-		y_out
-	);	
+		d_x,
+		d_y
+	);
+
+	drawBlack dbPath(
+		clk,
+		reset_n,
+		dbWren,
+		b_x,
+		b_y
+	);
+
+	decideDrawState decide(
+			b_x,
+			b_y,
+			d_x,
+			d_y,
+			colour_in,
+			wren,
+			dbWren,
+			plot,
+			x_out,
+			y_out,
+			colour_out
+	);
 
 
 	
 endmodule
 
+module decideDrawState(
+		input [7:0] b_x,
+		input [6:0] b_y,
+		input [7:0] d_x,
+		input [6:0] d_y,
+		input [2:0] colour_in,
+		input drawWren,
+		input blackWren,
+		output reg wren,
+		output reg [7:0] x_out,
+		output reg [6:0] y_out,
+		output reg [2:0] colour_out
+	);
+	
+	localparam black = 3'b000;
 
+	always @(*)
+	begin
+		x_out = 0;
+		y_out = 0;
+		colour_out = black;
+		if (blackWren)
+		begin
+			x_out = b_x;
+			y_out = b_y;
+		end
+		else if (drawWren)
+		begin
+			x_out = d_x;
+			y_out = d_y;
+			colour_out = colour_in;
+		end
+		wren = drawWren | blackWren;
+	end
+	
+
+endmodule
 
 //dirOut[1] == 0 => up and dirOut[0] == 0 => Left.
 module dirControl(

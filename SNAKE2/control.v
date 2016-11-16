@@ -8,9 +8,9 @@ module control (
     );
     reg [2:0] cnt;    
     reg [2:0] currState, nextState;
-    localparam L_DEFAULT = 2'b000,
-        UPDATE_POS = 2'b001,
-        DRAW = 2'b010,
+    localparam L_DEFAULT = 2'b00,
+        UPDATE_POS = 2'b01,
+        DRAW = 2'b10,
         WAIT = 2'b11;
 
     always @(*)
