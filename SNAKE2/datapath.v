@@ -5,22 +5,22 @@ module datapath (
 	input [2:0] dir,
 	input update,
 	input reset_n,
+	input row,
 	output reg [7:0] x,
 	output reg [6:0] y
 );
 	
-	reg row, col; //Counters
+	reg [2:0] cnt;
 	reg [7:0] initialx;
 	reg [6:0] initialy;	
-	always@(posedge clk)
+	always@(posedge clk, negedge reset_n)
 	begin
 		if (!reset_n) begin
 			x <= 0;
 			y <= 0;
 			initialx <= 0;
 			initialy <= 0;
-			row <= 1'b0;
-			col <= 1'b0;
+			cnt <= 0;
 		end
 		else if (ld)
 		begin
@@ -35,21 +35,20 @@ module datapath (
 				else
 					initialy <= initialy - 1;				
 			end
-			else begin
+			else if (!dir[2]) begin
 				if (dir[0])
 					initialx <= initialx + 1;
 				else 
-					initialy <= initialy + 1;
+					initialx <= initialx - 1;
 			end
+			cnt <= 0;
 		end
 		else if (plot)
 		begin
-			x <= initialx + col;
-			y <= initialy + row;
-
-			if (row)
-				col <= col + 1;
-			row <= row + 1;
+			x <= row;
+			y <= initialy + cnt;
+			cnt <= cnt + 1;
+			
 		end
 	end 
 

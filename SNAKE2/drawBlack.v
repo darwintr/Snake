@@ -9,7 +9,7 @@ module drawBlack(
 	reg [7:0] row;
 	reg [6:0] col;
 
-	always @(posedge clk)
+	always @(posedge clk, negedge reset_n)
 	begin
 		if (!reset_n)
 		begin
@@ -43,10 +43,10 @@ module drawBlackControl (
 		output reg dbWren
 	);
 	reg [19:0] cnt; 
-	wire[19:0] count_to = 20'd3_333_333;
-	wire [19:0] cycles_needed = 20'd19_200;
+	wire[31:0] count_to = 32'd25_000_000;
+	wire [31:0] cycles_needed = 32'd19_200;
 
-	always @(posedge clk or negedge reset_n)
+	always @(posedge clk)
 	begin
 		dbWren <= 0;
 		if (!reset_n)

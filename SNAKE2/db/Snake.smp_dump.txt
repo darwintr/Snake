@@ -1,0 +1,10 @@
+
+State Machine - |snake|ramInterface:ramInterfaceUnit|control:controlUnit|currState
+Name currState.INC_BLACK_COL currState.INC_COL currState.DRAW_BLACK_COL currState.WAIT currState.DRAW_COL currState.UPDATE_POS currState.L_DEFAULT 
+currState.L_DEFAULT 0 0 0 0 0 0 0 
+currState.UPDATE_POS 0 0 0 0 0 1 1 
+currState.DRAW_COL 0 0 0 0 1 0 1 
+currState.WAIT 0 0 0 1 0 0 1 
+currState.DRAW_BLACK_COL 0 0 1 0 0 0 1 
+currState.INC_COL 0 1 0 0 0 0 1 
+currState.INC_BLACK_COL 1 0 0 0 0 0 1 
