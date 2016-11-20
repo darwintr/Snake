@@ -37,18 +37,8 @@ module snake
 	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
 	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
 	
-	wire resetn = SW[0];
-	wire [2:0] colour_in = SW[2:0];
-	wire [2:0] colour;
-	wire [7:0] x;
-	wire [6:0] y;
-
-
-
-
-
-
-
+	//RESET
+	wire rst = SW[0];
 
 
 
@@ -63,7 +53,7 @@ module snake
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.
 	vga_adapter VGA(
-			.resetn(resetn),
+			.resetn(rst),
 			.clock(CLOCK_50),
 			.colour(colour),
 			.x(x),
