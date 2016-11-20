@@ -49,21 +49,35 @@ endmodule
 
 
 module datapath(
-	input inc_address,
-	input ld_q_prev,
-	input update_prev,
+	input clk,
+	input rst,
+
+	input update_head,
+	input drawQ,
+	input ld_head,
+	input ld_def,
+	input drawCurr,
+	input rowNum,
+	input colNum,
+	input ld_head_prev,
 	input ld_q_curr,
 	input ld_prev_q,
-	output reg ld_curr_prev,
-	output reg inc_address
-	output [15:0] currLoc,
-	output [7:0] x,
-	output [6:0] y
+	input ld_curr_prev,
+	input inc_address,
+	input rst_address,
+	input ld_curr_prev,
+	input inc_address,
+	input [2:0] dirIn,
+	
+	output reg isDead,
+	output reg plotEn,
+	output reg [7:0] x,
+	output reg [6:0] y
 	
 );
 
-
-
+	reg [10:0] address;
+	reg [14:0] curr, prev, head;
 
 
 endmodule
