@@ -5,15 +5,19 @@
 
 module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, colour_out);
 	input clk;
-	input rst
+	input rst;
 	input [2:0] colour_in;
 	input go;
-	input [2:0] dirIn;
+	input [3:0] dirIn;
+	input [10:0] length;
 
 	output [7:0] x;
 	output [6:0] y;
 	output plotEn;
 	output [2:0] colour_out;
+
+	wire [2:0] dirContOut;
+	wire isDead;
 
 	dirControl dirModule(
 			.clk(clk),
@@ -22,7 +26,6 @@ module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, colour_o
 			.dirOut(dirContOut)
 		);
 
-	wire [2:0] dirContOut;
 
 
 	controlMovement control(
@@ -64,7 +67,7 @@ module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, colour_o
 			.inc_address(inc_address),
 			.rst_address(rst_address),
 			.dirIn(dirContOut),
-			.isDead(0),
+			.isDead(isDead),
 			.plotEn(plotEn),
 			.x(x),
 			.y(y)
@@ -85,7 +88,7 @@ module dirControl(
 	wire input3 = dir[1];
 	wire input4 = dir[0];
 	
-	always @(posedge clk)
+	always @(posedge clk, negedge reset_n)
 	begin
 		if (!reset_n)
 			dirOut <= 0;
@@ -138,98 +141,103 @@ module datapath(
 	output reg [6:0] y
 	
 );
-	reg [14:0] ram_out, ram_in;
+	wire [14:0] ram_out;
+	reg [14:0] ram_in;
 	reg ram_wren;
 	reg [10:0] address;
 	reg [14:0] curr, prev, head;
 
 	ram r0(
 		.address(address),
-		.clk(clk),
+		.clock(clk),
 		.data(ram_in),
 		.wren(ram_wren),
 		.q(ram_out)
 		);
 
 	localparam def_x = 8'd60, def_y =7'd60;
-	always @(posedge clk)
+
+	always @(posedge clk, negedge rst)
 	begin
-		ram_wren <= 0;
-		if (!reset_n)
+		if (!rst)
 		begin
 			address <= 0;
 			curr <= 0;
 			prev <= 0;
 			head <= 0;
-			isDead <=0;
+			isDead <= 0;
 			plotEn <= 0;
 			x <= 0;
 			y <= 0;
 			ram_wren <= 0;
 			ram_in <= 0;
 		end
-		if (ld_head)
+		else
 		begin
-			x <= def_x;
-			y <= def_y;
-			head = {x, y};
-		end
-		if (inc_address)
-		begin
-			if (ld_def) 
+			ram_wren <= 0;
+			if (ld_head)
 			begin
-				ram_in <= {def_x + address, def_y + address};
+				x <= def_x;
+				y <= def_y;
+				head <= {x, y};
+			end
+			if (ld_def)
+			begin
+				ram_in <= {x + address, y};
 				ram_wren <= 1;
 			end
-			address <= address + 1'b1;
-		end
-		if (rst_address)
-		begin
-			address <= 0;
-		end
-		if (update_head)
-		begin
-			ram_wren <= 1;
-			if (dirIn[1])
-				y <= y + 1;
-			else if (~dirIn[1])
-				y <= y - 1;
-			if (dirIn[2])
+			if (inc_address)
 			begin
-				if (dirIn[0])
-					x <= x - 1;
-				else 
-					x <= x + 1;
+				address <= address + 1'b1;
 			end
-		end
-		if (drawQ)
-		begin
-			x <= ram_out[14:7] + colNum;
-			y <= ram_out[6:0] + rowNum;
-			plotEn <= 1;
-		end
-		if (drawCurr)
-		begin
-			x <= curr[14:7] + colNum;
-			y <= curr[6:0] + rowNum;
-			plotEn <= 1;
-		end
-		if (ld_head_prev)
-		begin
-			prev <= head;
-		end
-		if (ld_curr_prev)
-		begin
-			prev <= curr;
-		end
-		if (ld_q_curr)
-		begin
-			ram_wren <= 1;
-			curr <= ram_out;
-		end
-		if (ld_prev_q)
-		begin
-			prev <= q;
+			if (rst_address)
+			begin
+				address <= 0;
+			end
+			if (update_head)
+			begin
+				ram_wren <= 1;
+				if (dirIn[1])
+					y <= y + 1;
+				else if (~dirIn[1])
+					y <= y - 1;
+				if (dirIn[2])
+				begin
+					if (dirIn[0])
+						x <= x - 1;
+					else 
+						x <= x + 1;
+				end
+			end
+			if (drawQ)
+			begin
+				x <= ram_out[14:7] + colNum;
+				y <= ram_out[6:0] + rowNum;
+				plotEn <= 1;
+			end
+			if (drawCurr)
+			begin
+				x <= curr[14:7] + colNum;
+				y <= curr[6:0] + rowNum;
+				plotEn <= 1;
+			end
+			if (ld_head_prev)
+			begin
+				prev <= head;
+			end
+			if (ld_curr_prev)
+			begin
+				prev <= curr;
+			end
+			if (ld_q_curr)
+			begin
+				ram_wren <= 1;
+				curr <= ram_out;
+			end
+			if (ld_prev_q)
+			begin
+				prev <= ram_out;
+			end
 		end
 	end
 
