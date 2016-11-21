@@ -1,0 +1,155 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/hongy/OneDrive/Documents/SecondYear/F-CSC258/Snake
+vcontrolMovement
+!s110 1479678545
+!i10b 1
+!s100 FNWbOFX<X6aZn[=75n9PQ3
+IZinT<4^YBV:Vo;>HXBCY<0
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1479614632
+8snakeMovement.v
+FsnakeMovement.v
+L0 2
+Z2 OV;L;10.4d;61
+r1
+!s85 0
+31
+!s108 1479678545.000000
+!s107 snakeMovement.v|
+!s90 -reportprogress|300|-timescale|1ns/1ns|snakeMovement.v|
+!i113 1
+Z3 o-timescale 1ns/1ns
+ncontrol@movement
+vdirControl
+Z4 !s110 1479329017
+!i10b 1
+!s100 La`h:W7VNaZz:>nRNF:aQ1
+I[CJMchd3^BlgfcPd;7N]N2
+R1
+Z5 dC:/Users/Hongyu/OneDrive/Documents/SecondYear/F-CSC258/Snake
+Z6 w1479328880
+Z7 8ramInterface.v
+Z8 FramInterface.v
+L0 80
+R2
+r1
+!s85 0
+31
+Z9 !s108 1479329017.000000
+Z10 !s107 ram.v|ramWrapper.v|ramInterface.v|
+Z11 !s90 -reportprogress|300|-timescale|1ns/1ns|ramInterface.v|
+!i113 1
+R3
+ndir@control
+vram
+R4
+!i10b 1
+!s100 aC]gWgUko6oDFJi2^>VNU3
+I_@Taom:>oR]lB`176BFal2
+R1
+R5
+w1479315879
+8ram.v
+Fram.v
+L0 40
+R2
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R3
+vramControl
+R4
+!i10b 1
+!s100 ;dCF1Abaf8@iz^;PFW6<E0
+IKRJcb=R?_59@eOKKW_RUF1
+R1
+R5
+Z12 w1479329014
+Z13 8ramWrapper.v
+Z14 FramWrapper.v
+L0 30
+R2
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R3
+nram@control
+vramDataPath
+R4
+!i10b 1
+!s100 fQO`ekhkRQY[OKHiT^?iD2
+IPzAHofl7Y26UmlhDE<Y>A3
+R1
+R5
+R12
+R13
+R14
+L0 2
+R2
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R3
+nram@data@path
+vramInterface
+R4
+!i10b 1
+!s100 j[9[i<_Q<]1lZ[3]fVV501
+I;YQ@:>7Q]GFA=fEk@m22S2
+R1
+R5
+R6
+R7
+R8
+L0 3
+R2
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R3
+nram@interface
+vrate_divider
+!s110 1479329018
+!i10b 1
+!s100 2C]Bel_ZHk^[F7MMK>DBA0
+IYmF6IU<b7HiI`G;<[`^bZ2
+R1
+R5
+R6
+R7
+R8
+L0 120
+R2
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 1
+R3

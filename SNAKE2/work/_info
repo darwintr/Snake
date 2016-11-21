@@ -1,0 +1,112 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Hongyu/Desktop/SNAKE2
+vcontrol
+Z1 !s110 1479332122
+!i10b 1
+!s100 R_5k_QYlaY2EVVNOZ@Keo2
+IOFZ21KEST4zodESCbnSK;3
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1479332105
+8control.v
+Fcontrol.v
+L0 1
+Z3 OV;L;10.4d;61
+r1
+!s85 0
+31
+Z4 !s108 1479332122.000000
+Z5 !s107 datapath.v|control.v|ramInterface.v|
+Z6 !s90 -reportprogress|300|-timescale|1ns/1ns|ramInterface.v|
+!i113 1
+Z7 o-timescale 1ns/1ns
+vdatapath
+R1
+!i10b 1
+!s100 e89mMZd7d6?R;eGK=9JLj0
+I3Tc3O269hTOoKDJg32DNM2
+R2
+R0
+w1479331893
+8datapath.v
+Fdatapath.v
+L0 1
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 1
+R7
+vdirControl
+R1
+!i10b 1
+!s100 M0f=akb5LePB4CKmP1cK^0
+IF3;EZ9DM8E^0BmTWdI@?L1
+R2
+R0
+Z8 w1479330401
+Z9 8ramInterface.v
+Z10 FramInterface.v
+L0 69
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 1
+R7
+ndir@control
+vramInterface
+R1
+!i10b 1
+!s100 GJZ^Ul`jF5H7figaY3[9n2
+IO0hEjN_jH9VoMfB_7Fc;l1
+R2
+R0
+R8
+R9
+R10
+L0 4
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 1
+R7
+nram@interface
+vrate_divider
+R1
+!i10b 1
+!s100 AYH?A<ajm@3[1;bWW>`@]2
+IOGc=iRiQ4PI_9P49og91f0
+R2
+R0
+R8
+R9
+R10
+L0 109
+R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 1
+R7
