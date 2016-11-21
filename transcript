@@ -696,3 +696,90 @@ do testSnakelogic.do -r
 # Loading altera_mf_ver.altsyncram_body
 # Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
 # Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+do testSnakelogic.do -r
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 17:22:27 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeLogic.v 
+# -- Compiling module ram
+# -- Compiling module controlMovement
+# -- Compiling module snakeLogic
+# -- Compiling module dirControl
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	snakeLogic
+# End time: 17:22:27 on Nov 21,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 17:22:28 on Nov 21,2016, Elapsed time: 16:26:03
+# Errors: 0, Warnings: 0
+# vsim -L altera_mf_ver snakeLogic 
+# Start time: 17:22:28 on Nov 21,2016
+# Loading work.snakeLogic
+# Loading work.dirControl
+# Loading work.controlMovement
+# Loading work.datapath
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.altsyncram_body
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+do testSnakelogic.do -r
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 17:25:56 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeLogic.v 
+# -- Compiling module ram
+# -- Compiling module controlMovement
+# -- Compiling module snakeLogic
+# -- Compiling module dirControl
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	snakeLogic
+# End time: 17:25:56 on Nov 21,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 17:25:57 on Nov 21,2016, Elapsed time: 0:03:29
+# Errors: 0, Warnings: 0
+# vsim -L altera_mf_ver snakeLogic 
+# Start time: 17:25:57 on Nov 21,2016
+# Loading work.snakeLogic
+# Loading work.dirControl
+# Loading work.controlMovement
+# Loading work.datapath
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.altsyncram_body
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+do testSnakelogic.do -r
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 17:30:30 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeLogic.v 
+# -- Compiling module ram
+# -- Compiling module controlMovement
+# -- Compiling module snakeLogic
+# -- Compiling module dirControl
+# -- Compiling module datapath
+# 
+# Top level modules:
+# 	snakeLogic
+# End time: 17:30:30 on Nov 21,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 17:30:31 on Nov 21,2016, Elapsed time: 0:04:34
+# Errors: 0, Warnings: 0
+# vsim -L altera_mf_ver snakeLogic 
+# Start time: 17:30:31 on Nov 21,2016
+# Loading work.snakeLogic
+# Loading work.dirControl
+# Loading work.controlMovement
+# Loading work.datapath
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.altsyncram_body
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION

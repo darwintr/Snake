@@ -117,8 +117,7 @@ module controlMovement(
 			LD_HEAD: ld_head = 1;
 			LD_DEF:
 			begin
-				if (counter != 0)
-					inc_address = 1;
+				inc_address = 1;
 				ld_def = 1;
 			end
 			DRAW_WHITE_ROW:

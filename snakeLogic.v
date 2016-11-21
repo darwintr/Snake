@@ -165,26 +165,12 @@ module datapath(
 			curr <= 0;
 			prev <= 0;
 			head <= 0;
-			isDead <= 0;
-			plotEn <= 0;
-			x <= 0;
-			y <= 0;
-			ram_wren <= 0;
-			ram_in <= 0;
 		end
 		else
 		begin
-			ram_wren <= 0;
 			if (ld_head)
 			begin
-				x <= def_x;
-				y <= def_y;
-				head <= {x, y};
-			end
-			if (ld_def)
-			begin
-				ram_in <= {x + address, y};
-				ram_wren <= 1;
+				head <= {def_x, def_y};
 			end
 			if (inc_address)
 			begin
@@ -196,7 +182,6 @@ module datapath(
 			end
 			if (update_head)
 			begin
-				ram_wren <= 1;
 				if (dirIn[1])
 					y <= y + 1;
 				else if (~dirIn[1])
@@ -209,18 +194,6 @@ module datapath(
 						x <= x + 1;
 				end
 			end
-			if (drawQ)
-			begin
-				x <= ram_out[14:7] + colNum;
-				y <= ram_out[6:0] + rowNum;
-				plotEn <= 1;
-			end
-			if (drawCurr)
-			begin
-				x <= curr[14:7] + colNum;
-				y <= curr[6:0] + rowNum;
-				plotEn <= 1;
-			end
 			if (ld_head_prev)
 			begin
 				prev <= head;
@@ -231,14 +204,39 @@ module datapath(
 			end
 			if (ld_q_curr)
 			begin
-				ram_wren <= 1;
 				curr <= ram_out;
-			end
-			if (ld_prev_q)
-			begin
-				prev <= ram_out;
 			end
 		end
 	end
 
+	always @(*)
+	begin
+		x = 0;
+		y = 0;
+		isDead = 0;
+		plotEn = drawCurr || drawQ;
+		ram_wren = 0;
+		ram_in = 0;
+		if (drawCurr)
+		begin
+			x = curr[14:7] + colNum;
+			y = curr[6:0] + rowNum;
+		end
+		if (drawQ)
+		begin
+			x = ram_out[14:7] + colNum;
+			y = ram_out[6:0] + rowNum;
+		end
+		if (ld_def)
+		begin
+			ram_in = {head[14:7] + address, head[6:0]};
+			ram_wren = 1;
+		end
+		if (ld_prev_q)
+		begin
+			ram_in = prev;
+			ram_wren = 1;
+		end
+
+	end
 endmodule
