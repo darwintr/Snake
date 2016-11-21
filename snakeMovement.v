@@ -152,7 +152,6 @@ module controlMovement(
 				colNum = drawCounter[0];
 				rowNum = drawCounter[1];
 			end
-
 		endcase
 	end
 
