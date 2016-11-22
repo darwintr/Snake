@@ -68,9 +68,10 @@ module controlMovement(
 			CLOCK3: next_state = LD_CURR_PREV;
 			LD_CURR_PREV: next_state = cnt_le_l ? CLOCK4 : RST3;
 			CLOCK4: next_state = LD_Q_CURR;
-			RST3: next_state = DRAW_CURR;
-			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : WAIT;
-			WAIT: next_state = go ? RST1 : WAIT;
+			RST3: next_state = WAIT;
+			WAIT: next_state = go ? DRAW_CURR : WAIT;
+
+			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : RST1;
 		default: next_state = LD_HEAD;
 		endcase
 	end
@@ -135,13 +136,16 @@ module controlMovement(
 			LD_HEAD_PREV: ld_head_into_prev = 1;
 			LD_Q_CURR: ld_q_into_curr = 1;
 			LD_PREV_Q: ld_prev_into_q = 1;
-			LD_CURR_PREV: ld_curr_into_prev = 1;
+			LD_CURR_PREV: begin
+				ld_curr_into_prev = 1;
+				inc_address = 1;
+			end
 			RST3: rst_address = 1;
 			DRAW_CURR: begin
 				draw_curr = 1;
 				cnt_status = drawCounter;
 			end
-			WAIT: next_state = go ? RST1 : WAIT;
+			
 
 		endcase
 	end
