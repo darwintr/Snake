@@ -40,15 +40,6 @@ module snake
 	//RESET
 	wire rst = SW[0];
 
-
-
-
-
-
-
-
-
-	
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.

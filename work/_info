@@ -7,8 +7,9 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 dC:/Users/hongy/OneDrive/Documents/SecondYear/F-CSC258/Snake
+dC:/Users/hongy/OneDrive/Documents/SecondYear/F-CSC258/Snake
 vcontrolMovement
+<<<<<<< HEAD
 !s110 1479790738
 !i10b 1
 !s100 gW6o_Bo1fz8XXo6O]UQ2f1
@@ -16,122 +17,157 @@ IF_Im^eCn?a`S__nmJe7e41
 Z1 VDg1SIo80bB@j0V0VzS_@n1
 R0
 w1479790641
+=======
+Z0 !s110 1479767430
+!i10b 1
+!s100 65MOE3A1OFI7E^Co^m;an2
+IiW08A0?e41YbT_U6<JQk73
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/Darwin/Desktop/School/CSC258/Snake
+w1479767427
+>>>>>>> 1d7174e697a50006bda7e51bd3fe146316adfdc5
 8snakeMovement.v
 FsnakeMovement.v
 L0 2
-Z2 OV;L;10.4d;61
+Z3 OV;L;10.4d;61
 r1
 !s85 0
 31
+<<<<<<< HEAD
 !s108 1479790738.000000
 !s107 snakeMovement.v|
 !s90 -reportprogress|300|-timescale|1ns/1ns|snakeMovement.v|
+=======
+Z4 !s108 1479767430.000000
+Z5 !s107 snakeMovement.v|ram.v|snakeLogic.v|
+Z6 !s90 -reportprogress|300|-timescale|1ns/1ns|snakeLogic.v|
+>>>>>>> 1d7174e697a50006bda7e51bd3fe146316adfdc5
 !i113 1
-Z3 o-timescale 1ns/1ns
+Z7 o-timescale 1ns/1ns
 ncontrol@movement
-vdirControl
-Z4 !s110 1479329017
+vdatapath
+R0
 !i10b 1
-!s100 La`h:W7VNaZz:>nRNF:aQ1
-I[CJMchd3^BlgfcPd;7N]N2
+!s100 Ae:jciZ4@FFFafoKSjib41
+ICj2UF61?DTbX9kL;GTn0H3
 R1
-Z5 dC:/Users/Hongyu/OneDrive/Documents/SecondYear/F-CSC258/Snake
-Z6 w1479328880
-Z7 8ramInterface.v
-Z8 FramInterface.v
-L0 80
 R2
+Z8 w1479767117
+Z9 8snakeLogic.v
+Z10 FsnakeLogic.v
+L0 119
+R3
 r1
 !s85 0
 31
-Z9 !s108 1479329017.000000
-Z10 !s107 ram.v|ramWrapper.v|ramInterface.v|
-Z11 !s90 -reportprogress|300|-timescale|1ns/1ns|ramInterface.v|
+R4
+R5
+R6
 !i113 1
+R7
+vdirControl
+R0
+!i10b 1
+!s100 ?boBnC=@noIH:Q3Tl>m_Z3
+IM:PYa;><DJfYaT=bF?fV31
+R1
+R2
+R8
+R9
+R10
+L0 79
 R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 1
+R7
 ndir@control
 vram
-R4
+R0
 !i10b 1
-!s100 aC]gWgUko6oDFJi2^>VNU3
-I_@Taom:>oR]lB`176BFal2
+!s100 DUX@bHO9Z<:z`gd:eeg2Y1
+IF5e<eW;@1D66EiZ_:hWRH3
 R1
-R5
-w1479315879
+R2
+w1479705010
 8ram.v
 Fram.v
 L0 40
-R2
+R3
 r1
 !s85 0
 31
-R9
-R10
-R11
-!i113 1
-R3
-vramControl
 R4
+R5
+R6
+!i113 1
+R7
+vramControl
+Z11 !s110 1479329017
 !i10b 1
 !s100 ;dCF1Abaf8@iz^;PFW6<E0
 IKRJcb=R?_59@eOKKW_RUF1
 R1
-R5
-Z12 w1479329014
-Z13 8ramWrapper.v
-Z14 FramWrapper.v
+Z12 dC:/Users/Hongyu/OneDrive/Documents/SecondYear/F-CSC258/Snake
+Z13 w1479329014
+Z14 8ramWrapper.v
+Z15 FramWrapper.v
 L0 30
-R2
+R3
 r1
 !s85 0
 31
-R9
-R10
-R11
+Z16 !s108 1479329017.000000
+Z17 !s107 ram.v|ramWrapper.v|ramInterface.v|
+Z18 !s90 -reportprogress|300|-timescale|1ns/1ns|ramInterface.v|
 !i113 1
-R3
+R7
 nram@control
 vramDataPath
-R4
+R11
 !i10b 1
 !s100 fQO`ekhkRQY[OKHiT^?iD2
 IPzAHofl7Y26UmlhDE<Y>A3
 R1
-R5
 R12
 R13
 R14
+R15
 L0 2
-R2
+R3
 r1
 !s85 0
 31
-R9
-R10
-R11
+R16
+R17
+R18
 !i113 1
-R3
+R7
 nram@data@path
 vramInterface
-R4
+R11
 !i10b 1
 !s100 j[9[i<_Q<]1lZ[3]fVV501
 I;YQ@:>7Q]GFA=fEk@m22S2
 R1
-R5
-R6
-R7
-R8
+R12
+Z19 w1479328880
+Z20 8ramInterface.v
+Z21 FramInterface.v
 L0 3
-R2
+R3
 r1
 !s85 0
 31
-R9
-R10
-R11
+R16
+R17
+R18
 !i113 1
-R3
+R7
 nram@interface
 vrate_divider
 !s110 1479329018
@@ -139,17 +175,38 @@ vrate_divider
 !s100 2C]Bel_ZHk^[F7MMK>DBA0
 IYmF6IU<b7HiI`G;<[`^bZ2
 R1
-R5
-R6
-R7
-R8
+R12
+R19
+R20
+R21
 L0 120
-R2
+R3
 r1
 !s85 0
 31
+R16
+R17
+R18
+!i113 1
+R7
+vsnakeLogic
+R0
+!i10b 1
+!s100 __;^dS7]F6jmTWJeYEC=@1
+IF]Fi<3NMi4L8O;JEzk5kg0
+R1
+R2
+R8
 R9
 R10
-R11
-!i113 1
+L0 6
 R3
+r1
+!s85 0
+31
+R4
+R5
+R6
+!i113 1
+R7
+nsnake@logic

@@ -142,6 +142,7 @@ module controlMovement(
 				cnt_status = drawCounter;
 			end
 			WAIT: next_state = go ? RST1 : WAIT;
+
 		endcase
 	end
 
