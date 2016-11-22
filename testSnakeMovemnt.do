@@ -15,6 +15,6 @@ force {clk} 0 0 ns, 1 10 ns -r 20 ns
 force {rst} 1 0 ns, 0 1 ns, 1 2 ns
 force {colour_in} 111
 force {length} 11
-force {go} 0 0 ns, 1 400 ns, 0 411 ns
+force {go} 0 0 ns, 1 1100 ns, 0 1111 ns
 
 run 2000 ns

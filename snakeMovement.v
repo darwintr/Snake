@@ -7,58 +7,71 @@ module controlMovement(
 	input go,
 
 	//---------------------------
-	output reg update_head,
-	output reg drawQ,
 	output reg ld_head,
-	output reg ld_def,
-	output reg drawCurr,
-	output reg rowNum,
-	output reg colNum,
-	output reg ld_head_prev,
-	output reg ld_q_curr,
-	output reg ld_prev_q,
-	output reg ld_curr_prev,
+	output reg ld_q_def,
 	output reg inc_address,
 	output reg rst_address,
-	output reg [2:0] colour_out
+	output reg draw_q,
+	output reg [1:0] cnt_status,
+	output reg update_head,
+	output reg ld_head_into_prev,
+	output reg ld_q_into_curr,
+	output reg ld_prev_into_q,
+	output reg ld_curr_into_prev,
+	output reg [2:0] colour_out,
+	output reg draw_curr
 );	
 	
 	reg [10:0] counter;
 	reg [1:0] drawCounter;
-	reg [3:0] curr_state, next_state;
+	reg [4:0] curr_state, next_state;
 	wire cnt_le_l = counter < length - 1;
 	wire draw_le_3 = drawCounter < 3;
 	localparam 
-		LD_HEAD = 4'd0,
-		LD_DEF = 4'd1,
-		RESET_CNT = 4'd2,
-		DRAW_WHITE_ROW = 4'd3,
-		WAIT = 4'd5,
-		UPDATE_HEAD = 4'd6,
-		LD_HEAD_PREV = 4'd7,
-		LD_Q_CURR = 4'd8,
-		LD_PREV_Q = 4'd9,
-		LD_CURR_PREV = 4'd10,
-		DRAW_B_ROW = 4'd11,
-		INC_CNT = 4'd13;
+		LD_HEAD = 5'd0,
+		LD_DEF = 5'd1,
+		CLOCK1 = 5'd2,
+		INC1 = 5'd3,
+		RST1 = 5'd4,
+		CLOCK2 = 5'd5,
+		DRAW_WHITE = 5'd6,
+		INC2 = 5'd7,
+		RST2 = 5'd8,
+		UPDATE_HEAD = 5'd9,
+		LD_HEAD_PREV = 5'd10,
+		LD_Q_CURR = 5'd11,
+		LD_PREV_Q = 5'd12,
+		CLOCK3 = 5'd13,
+		LD_CURR_PREV = 5'd14,
+		CLOCK4 = 5'd15,
+		RST3 = 5'd16,
+		DRAW_CURR = 5'd17,
+		WAIT = 5'd18;
 
 
 	always @(*)
 	begin: stateTable
 		case (curr_state)
-			LD_HEAD: next_state = LD_DEF;
-			LD_DEF: next_state = cnt_le_l ? LD_DEF : RESET_CNT;
-			RESET_CNT: next_state = DRAW_WHITE_ROW;
-			DRAW_WHITE_ROW: next_state = draw_le_3 ? DRAW_WHITE_ROW : INC_CNT;
-			INC_CNT: next_state = cnt_le_l ? DRAW_WHITE_ROW : WAIT;
-			WAIT: next_state = go ? UPDATE_HEAD : WAIT;
-			UPDATE_HEAD : next_state = LD_HEAD_PREV;
-			LD_HEAD_PREV : next_state = LD_Q_CURR;
-			LD_Q_CURR : next_state = LD_PREV_Q;
-			LD_PREV_Q : next_state = LD_CURR_PREV;
-			LD_CURR_PREV : next_state = cnt_le_l ? LD_Q_CURR : DRAW_B_ROW;
-			DRAW_B_ROW : next_state = draw_le_3 ? DRAW_B_ROW : RESET_CNT;
-		default : next_state = LD_HEAD;
+			LD_HEAD : next_state = LD_DEF;
+			LD_DEF : next_state = CLOCK1;
+			CLOCK1 : next_state = INC1;
+			INC1: next_state = cnt_le_l ? LD_DEF : RST1;
+			RST1: next_state = CLOCK2;
+			CLOCK2: next_state = DRAW_WHITE;
+			DRAW_WHITE: next_state = draw_le_3 ? DRAW_WHITE : INC2;
+			INC2: next_state = cnt_le_l ? CLOCK2 : RST2;
+			RST2: next_state = UPDATE_HEAD;
+			UPDATE_HEAD: next_state = LD_HEAD_PREV;
+			LD_HEAD_PREV: next_state = LD_Q_CURR;
+			LD_Q_CURR: next_state = LD_PREV_Q;
+			LD_PREV_Q: next_state = CLOCK3;
+			CLOCK3: next_state = LD_CURR_PREV;
+			LD_CURR_PREV: next_state = cnt_le_l ? CLOCK4 : RST3;
+			CLOCK4: next_state = LD_Q_CURR;
+			RST3: next_state = DRAW_CURR;
+			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : WAIT;
+			WAIT: next_state = go ? RST1 : WAIT;
+		default: next_state = LD_HEAD;
 		endcase
 	end
 	
@@ -70,89 +83,65 @@ module controlMovement(
 			drawCounter <= 0;
 		end
 		else begin
-			if (curr_state == RESET_CNT || curr_state == WAIT)
+			if (curr_state == RST1 || curr_state == RST2 || curr_state == RST3)
 			begin
 				counter <= 0;
 				drawCounter <= 0;
 			end
-			
-			else if (curr_state == LD_CURR_PREV || curr_state == LD_DEF)
+			else if (curr_state == INC1 || curr_state == INC2 || curr_state == LD_CURR_PREV)
 			begin
 				counter <= counter + 1;
 			end
-
-			else if (curr_state == INC_CNT)
-			begin
-				counter <= counter + 1;
-
-			end
-
-			else if (curr_state == DRAW_WHITE_ROW || curr_state == DRAW_B_ROW)
-			begin
+			else if (curr_state == DRAW_CURR || curr_state == DRAW_WHITE)
 				drawCounter <= drawCounter + 1;
-				
-			end
 
 			curr_state <= next_state;
 		end
 	end
-	
+
 	always @(*) 
 	begin : state_result
 		ld_head = 0;
-		ld_def = 0;
-		drawCurr = 0;
-		drawQ = 0;
-		update_head = 0;
-		ld_head_prev = 0;
-		ld_q_curr = 0;
-		ld_prev_q = 0;
-		ld_curr_prev = 0;
+		ld_q_def = 0;
 		inc_address = 0;
-		colour_out = 0;
-		rowNum = 0;
-		colNum = 0;
 		rst_address = 0;
+		draw_q = 0;
+		cnt_status = 2'b0;
+		update_head = 0;
+		ld_head_into_prev = 0;
+		ld_q_into_curr = 0;
+		ld_prev_into_q = 0;
+		ld_curr_into_prev = 0;
+		colour_out = 3'b0;
+		draw_curr = 0;
 		case (curr_state)
-			LD_HEAD: ld_head = 1;
-			LD_DEF:
-			begin
-				inc_address = 1;
-				ld_def = 1;
+			LD_HEAD : ld_head = 1;
+			LD_DEF : ld_q_def = 1;
+			INC1: inc_address = 1;
+			RST1: rst_address = 1;
+			DRAW_WHITE: begin 
+				draw_q = 1;
+				cnt_status = drawCounter;
+				if (counter == 0) begin
+					colour_out <= 3'b100;
+				end
+				else begin
+					colour_out <= colour_in;
+				end
 			end
-			DRAW_WHITE_ROW:
-			begin
-				drawQ = 1;
-				colour_out = counter == 0 ? 3'b100 : colour_in;
-				colNum = drawCounter[0];
-				rowNum = drawCounter[1];
+			INC2: inc_address = 1;
+			RST2: rst_address = 1;
+			UPDATE_HEAD: update_head = 1;
+			LD_HEAD_PREV: ld_head_into_prev = 1;
+			LD_Q_CURR: ld_q_into_curr = 1;
+			LD_PREV_Q: ld_prev_into_q = 1;
+			LD_CURR_PREV: ld_curr_into_prev = 1;
+			RST3: rst_address = 1;
+			DRAW_CURR: begin
+				draw_curr = 1;
+				cnt_status = drawCounter;
 			end
-			RESET_CNT:
-			begin
-				rst_address = 1;
-			end
-			INC_CNT:
-			begin
-				inc_address = 1;
-			end
-			UPDATE_HEAD: begin
-				update_head = 1;
-				rst_address = 1;
-			end
-			LD_HEAD_PREV: ld_head_prev = 1;
-			LD_Q_CURR: ld_q_curr = 1;
-			LD_PREV_Q: ld_prev_q = 1;
-			LD_CURR_PREV: begin
-				ld_curr_prev = 1;
-				inc_address = 1;
-			end
-			DRAW_B_ROW:
-			begin
-				drawCurr = 1;
-				colNum = drawCounter[0];
-				rowNum = drawCounter[1];
-			end
-
+			WAIT: next_state = go ? RST1 : WAIT;
 		endcase
 	end
 

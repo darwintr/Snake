@@ -1,20 +1,13 @@
 do testSnakeMovemnt.do
-# ** Error (suppressible): (vish-4008) Object 'clk' not found.
-# Error in macro ./testSnakeMovemnt.do line 8
-# ** Error (suppressible): (vish-4008) Object 'clk' not found.
-# 
-#     while executing
-# "force {clk} 1 0 ns, 0 10 ns -r 20 ns"
-do testSnakeMovemnt.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 21:55:23 on Nov 19,2016
+# Start time: 23:36:46 on Nov 21,2016
 # vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
 # -- Compiling module controlMovement
-# ** Error: (vlog-13069) snakeMovement.v(10): near ";": syntax error, unexpected ';', expecting ')'.
+# ** Error: (vlog-13038) snakeMovement.v(24): near ")": Missing port in ansi port list.
 # 
-# End time: 21:55:23 on Nov 19,2016, Elapsed time: 0:00:00
+# End time: 23:36:46 on Nov 21,2016, Elapsed time: 0:00:00
 # Errors: 1, Warnings: 0
 # ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
 # Error in macro ./testSnakeMovemnt.do line 8
@@ -25,20 +18,17 @@ do testSnakeMovemnt.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 21:55:30 on Nov 19,2016
+# Start time: 23:36:56 on Nov 21,2016
 # vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
 # -- Compiling module controlMovement
-# ** Error: (vlog-13069) snakeMovement.v(121): near "begin": syntax error, unexpected begin.
+# ** Error: (vlog-13069) snakeMovement.v(63): near ";": syntax error, unexpected ';'.
 # 
-# ** Error: (vlog-13025) snakeMovement.v(123): near ":": Syntax error. Statement labels are only allowed in SystemVerilog.
+# ** Error: (vlog-13069) snakeMovement.v(89): near "=": syntax error, unexpected '=', expecting ++ or --.
 # 
-# ** Error: snakeMovement.v(130): A label for a block can be specified before 'begin' only in SystemVerilog.
-# ** Error: (vlog-13069) snakeMovement.v(130): near "=": syntax error, unexpected '='.
+# ** Error: (vlog-13069) snakeMovement.v(98): near "end": syntax error, unexpected end.
 # 
-# ** Error: snakeMovement.v(130): (vlog-13205) Syntax error found in the scope following 'drawQ'. Is there a missing '::'?
-# 
-# End time: 21:55:30 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 5, Warnings: 0
+# End time: 23:36:57 on Nov 21,2016, Elapsed time: 0:00:01
+# Errors: 3, Warnings: 0
 # ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
 # Error in macro ./testSnakeMovemnt.do line 8
 # C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
@@ -48,14 +38,14 @@ do testSnakeMovemnt.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 21:55:44 on Nov 19,2016
+# Start time: 23:37:06 on Nov 21,2016
 # vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
 # -- Compiling module controlMovement
-# ** Error: snakeMovement.v(145): (vlog-2730) Undefined variable: 'DRAW_BLACK_ROW1'.
+# ** Error: (vlog-13069) snakeMovement.v(89): near "=": syntax error, unexpected '=', expecting ++ or --.
 # 
-# ** Error: snakeMovement.v(150): (vlog-2730) Undefined variable: 'DRAW_BLACK_ROW2'.
+# ** Error: (vlog-13069) snakeMovement.v(98): near "end": syntax error, unexpected end.
 # 
-# End time: 21:55:44 on Nov 19,2016, Elapsed time: 0:00:00
+# End time: 23:37:06 on Nov 21,2016, Elapsed time: 0:00:00
 # Errors: 2, Warnings: 0
 # ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
 # Error in macro ./testSnakeMovemnt.do line 8
@@ -66,355 +56,158 @@ do testSnakeMovemnt.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 21:55:55 on Nov 19,2016
+# Start time: 23:37:15 on Nov 21,2016
 # vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
 # -- Compiling module controlMovement
+# ** Error: snakeMovement.v(91): (vlog-2730) Undefined variable: 'curr'.
 # 
-# Top level modules:
-# 	controlMovement
-# End time: 21:55:56 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 21:55:57 on Nov 19,2016
-# Loading work.controlMovement
-# ** Error (suppressible): (vish-4008) Object 'color_in' not found.
-# Error in macro ./testSnakeMovemnt.do line 16
-# ** Error (suppressible): (vish-4008) Object 'color_in' not found.
-# 
-#     while executing
-# "force {color_in} 111"
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 21:56:30 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 21:56:30 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 21:56:36 on Nov 19,2016, Elapsed time: 0:00:39
+# End time: 23:37:15 on Nov 21,2016, Elapsed time: 0:00:00
 # Errors: 1, Warnings: 0
-# vsim controlMovement 
-# Start time: 21:56:36 on Nov 19,2016
-# Loading work.controlMovement
-# ** Error: (vsim-4012) Expected ',' separator between value/time pairs.
-# Usage: force [-deposit | -drive | -freeze] [-cancel <period>] [-repeat <period>] <item_name> <value> [<time>] [, <value> <time> ...]
-# Error in macro ./testSnakeMovemnt.do line 18
-# ** Error: (vsim-4012) Expected ',' separator between value/time pairs.
-# Usage: force [-deposit | -drive | -freeze] [-cancel <period>] [-repeat <period>] <item_name> <value> [<time>] [, <value> <time> ...]
+# ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
+# Error in macro ./testSnakeMovemnt.do line 8
+# C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
 #     while executing
-# "force {go} 0 0 ns 1 800 ns"
+# "vlog -timescale 1ns/1ns snakeMovement.v"
 do testSnakeMovemnt.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 21:56:52 on Nov 19,2016
+# Start time: 23:37:24 on Nov 21,2016
 # vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
 # -- Compiling module controlMovement
 # 
 # Top level modules:
 # 	controlMovement
-# End time: 21:56:52 on Nov 19,2016, Elapsed time: 0:00:00
+# End time: 23:37:24 on Nov 21,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# End time: 21:56:54 on Nov 19,2016, Elapsed time: 0:00:18
+# vsim controlMovement 
+# Start time: 23:37:25 on Nov 21,2016
+# Loading work.controlMovement
+do testSnakeMovemnt.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:40:02 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
+# -- Compiling module controlMovement
+# 
+# Top level modules:
+# 	controlMovement
+# End time: 23:40:02 on Nov 21,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 23:40:06 on Nov 21,2016, Elapsed time: 0:02:41
+# Errors: 0, Warnings: 0
+# vsim controlMovement 
+# Start time: 23:40:06 on Nov 21,2016
+# Loading work.controlMovement
+do testSnakeMovemnt.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:40:56 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
+# -- Compiling module controlMovement
+# 
+# Top level modules:
+# 	controlMovement
+# End time: 23:40:56 on Nov 21,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 23:40:57 on Nov 21,2016, Elapsed time: 0:00:51
+# Errors: 0, Warnings: 0
+# vsim controlMovement 
+# Start time: 23:40:57 on Nov 21,2016
+# Loading work.controlMovement
+do testSnakeMovemnt.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:42:26 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
+# -- Compiling module controlMovement
+# 
+# Top level modules:
+# 	controlMovement
+# End time: 23:42:27 on Nov 21,2016, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# End time: 23:42:28 on Nov 21,2016, Elapsed time: 0:01:31
+# Errors: 0, Warnings: 0
+# vsim controlMovement 
+# Start time: 23:42:28 on Nov 21,2016
+# Loading work.controlMovement
+do testSnakeMovemnt.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:43:54 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
+# -- Compiling module controlMovement
+# 
+# Top level modules:
+# 	controlMovement
+# End time: 23:43:54 on Nov 21,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 23:43:55 on Nov 21,2016, Elapsed time: 0:01:27
+# Errors: 0, Warnings: 0
+# vsim controlMovement 
+# Start time: 23:43:55 on Nov 21,2016
+# Loading work.controlMovement
+do testSnakeMovemnt.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:55:04 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
+# -- Compiling module controlMovement
+# ** Error: snakeMovement.v(92): (vlog-2730) Undefined variable: 'ld_head'.
+# 
+# ** Error: snakeMovement.v(93): (vlog-2730) Undefined variable: 'ld_q_def'.
+# 
+# ** Error: snakeMovement.v(94): (vlog-2730) Undefined variable: 'inc_address'.
+# 
+# ** Error: snakeMovement.v(95): (vlog-2730) Undefined variable: 'rst_address'.
+# 
+# ** Error: snakeMovement.v(96): (vlog-2730) Undefined variable: 'draw_q'.
+# 
+# ** Error: snakeMovement.v(97): (vlog-2730) Undefined variable: 'cnt_status'.
+# 
+# ** Error: snakeMovement.v(98): (vlog-2730) Undefined variable: 'update_head'.
+# 
+# ** Error: snakeMovement.v(99): (vlog-2730) Undefined variable: 'ld_head_into_prev'.
+# 
+# ** Error: snakeMovement.v(100): (vlog-2730) Undefined variable: 'ld_q_into_curr'.
+# 
+# ** Error: snakeMovement.v(101): (vlog-2730) Undefined variable: 'ld_prev_into_q'.
+# 
+# ** Error: snakeMovement.v(102): (vlog-2730) Undefined variable: 'ld_curr_into_prev'.
+# 
+# ** Error: snakeMovement.v(103): (vlog-2730) Undefined variable: 'colour_out'.
+# 
+# ** Error: snakeMovement.v(104): (vlog-2730) Undefined variable: 'draw_curr'.
+# 
+# ** Error: (vlog-13069) snakeMovement.v(131): near ";": syntax error, unexpected ';'.
+# 
+# ** Error: (vlog-13025) snakeMovement.v(132): near ":": Syntax error. Statement labels are only allowed in SystemVerilog.
+# 
+# End time: 23:55:04 on Nov 21,2016, Elapsed time: 0:00:00
+# Errors: 15, Warnings: 0
+# ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
+# Error in macro ./testSnakeMovemnt.do line 8
+# C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
+#     while executing
+# "vlog -timescale 1ns/1ns snakeMovement.v"
+do testSnakeMovemnt.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:57:13 on Nov 21,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
+# -- Compiling module controlMovement
+# ** Error: (vlog-13069) snakeMovement.v(143): near ";": syntax error, unexpected ';'.
+# 
+# ** Error: (vlog-13025) snakeMovement.v(144): near ":": Syntax error. Statement labels are only allowed in SystemVerilog.
+# 
+# End time: 23:57:13 on Nov 21,2016, Elapsed time: 0:00:00
 # Errors: 2, Warnings: 0
-# vsim controlMovement 
-# Start time: 21:56:54 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 21:59:43 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 21:59:43 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 21:59:44 on Nov 19,2016, Elapsed time: 0:02:50
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 21:59:45 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:00:11 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:00:12 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# End time: 22:00:13 on Nov 19,2016, Elapsed time: 0:00:28
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:00:13 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:01:54 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:01:55 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# End time: 22:01:56 on Nov 19,2016, Elapsed time: 0:01:43
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:01:56 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:04:06 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:04:06 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:04:08 on Nov 19,2016, Elapsed time: 0:02:12
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:04:08 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:05:03 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:05:04 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# End time: 22:05:05 on Nov 19,2016, Elapsed time: 0:00:57
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:05:05 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:08:04 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:08:04 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:08:06 on Nov 19,2016, Elapsed time: 0:03:01
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:08:06 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:12:39 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:12:39 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:12:41 on Nov 19,2016, Elapsed time: 0:04:35
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:12:41 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:13:50 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:13:50 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:13:52 on Nov 19,2016, Elapsed time: 0:01:11
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:13:52 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:16:32 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:16:32 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:16:34 on Nov 19,2016, Elapsed time: 0:02:42
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:16:34 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:19:18 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:19:18 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:19:19 on Nov 19,2016, Elapsed time: 0:02:45
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:19:19 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:22:43 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:22:43 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:22:45 on Nov 19,2016, Elapsed time: 0:03:26
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:22:45 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:24:35 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:24:35 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:24:37 on Nov 19,2016, Elapsed time: 0:01:52
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:24:37 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:32:22 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:32:23 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# End time: 22:32:24 on Nov 19,2016, Elapsed time: 0:07:47
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:32:24 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:33:18 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:33:18 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:33:20 on Nov 19,2016, Elapsed time: 0:00:56
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:33:20 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:43:22 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:43:23 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# End time: 22:43:24 on Nov 19,2016, Elapsed time: 0:10:04
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:43:24 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:44:37 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:44:37 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:44:39 on Nov 19,2016, Elapsed time: 0:01:15
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:44:39 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:49:54 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# ** Error: snakeMovement.v(51): (vlog-2730) Undefined variable: 'DRAW_WHITE_ROW1'.
-# 
-# ** Error: snakeMovement.v(58): (vlog-2730) Undefined variable: 'DRAW_B_ROW1'.
-# 
-# ** Error: snakeMovement.v(89): (vlog-2730) Undefined variable: 'DRAW_WHITE_ROW1'.
-# 
-# ** Error: snakeMovement.v(89): (vlog-2730) Undefined variable: 'DRAW_WHITE_ROW2'.
-# 
-# ** Error: snakeMovement.v(95): (vlog-2730) Undefined variable: 'DRAW_B_ROW2'.
-# 
-# End time: 22:49:55 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 5, Warnings: 0
 # ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
 # Error in macro ./testSnakeMovemnt.do line 8
 # C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
@@ -424,151 +217,33 @@ do testSnakeMovemnt.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:50:47 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# ** Error: snakeMovement.v(52): (vlog-2730) Undefined variable: 'DRAW_WHITE_ROW1'.
-# 
-# End time: 22:50:47 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
-# Error in macro ./testSnakeMovemnt.do line 8
-# C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
-#     while executing
-# "vlog -timescale 1ns/1ns snakeMovement.v"
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:50:57 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# ** Error: snakeMovement.v(53): (vlog-2730) Undefined variable: 'DRAW_WHITE_ROW1'.
-# 
-# End time: 22:50:57 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
-# Error in macro ./testSnakeMovemnt.do line 8
-# C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
-#     while executing
-# "vlog -timescale 1ns/1ns snakeMovement.v"
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:51:03 on Nov 19,2016
+# Start time: 23:57:22 on Nov 21,2016
 # vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
 # -- Compiling module controlMovement
 # 
 # Top level modules:
 # 	controlMovement
-# End time: 22:51:03 on Nov 19,2016, Elapsed time: 0:00:00
+# End time: 23:57:22 on Nov 21,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# End time: 22:51:04 on Nov 19,2016, Elapsed time: 0:06:25
-# Errors: 16, Warnings: 0
+# End time: 23:57:23 on Nov 21,2016, Elapsed time: 0:13:28
+# Errors: 23, Warnings: 0
 # vsim controlMovement 
-# Start time: 22:51:05 on Nov 19,2016
+# Start time: 23:57:23 on Nov 21,2016
 # Loading work.controlMovement
 do testSnakeMovemnt.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # 
 # Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:53:09 on Nov 19,2016
+# Start time: 23:58:58 on Nov 21,2016
 # vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
 # -- Compiling module controlMovement
 # 
 # Top level modules:
 # 	controlMovement
-# End time: 22:53:09 on Nov 19,2016, Elapsed time: 0:00:00
+# End time: 23:58:58 on Nov 21,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# End time: 22:53:10 on Nov 19,2016, Elapsed time: 0:02:05
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:53:10 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:54:44 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:54:44 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:54:46 on Nov 19,2016, Elapsed time: 0:01:36
+# End time: 23:58:59 on Nov 21,2016, Elapsed time: 0:01:36
 # Errors: 0, Warnings: 0
 # vsim controlMovement 
-# Start time: 22:54:46 on Nov 19,2016
+# Start time: 23:58:59 on Nov 21,2016
 # Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:56:22 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 22:56:22 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 22:56:24 on Nov 19,2016, Elapsed time: 0:01:38
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 22:56:24 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 22:59:50 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# ** Error: (vlog-13025) snakeMovement.v(58): near ":": Syntax error. Statement labels are only allowed in SystemVerilog.
-# 
-# End time: 22:59:50 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# ** Error: C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
-# Error in macro ./testSnakeMovemnt.do line 8
-# C:/altera/16.0/modelsim_ase/win32aloem/vlog failed.
-#     while executing
-# "vlog -timescale 1ns/1ns snakeMovement.v"
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 23:00:05 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 23:00:05 on Nov 19,2016, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# End time: 23:00:06 on Nov 19,2016, Elapsed time: 0:03:42
-# Errors: 4, Warnings: 0
-# vsim controlMovement 
-# Start time: 23:00:06 on Nov 19,2016
-# Loading work.controlMovement
-do testSnakeMovemnt.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# 
-# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
-# Start time: 23:03:59 on Nov 19,2016
-# vlog -reportprogress 300 -timescale 1ns/1ns snakeMovement.v 
-# -- Compiling module controlMovement
-# 
-# Top level modules:
-# 	controlMovement
-# End time: 23:04:00 on Nov 19,2016, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# End time: 23:04:01 on Nov 19,2016, Elapsed time: 0:03:55
-# Errors: 0, Warnings: 0
-# vsim controlMovement 
-# Start time: 23:04:01 on Nov 19,2016
-# Loading work.controlMovement
-# End time: 23:08:50 on Nov 19,2016, Elapsed time: 0:04:49
-# Errors: 0, Warnings: 0
