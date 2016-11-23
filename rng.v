@@ -13,9 +13,9 @@ module rng (
     reg [14:0] random, random_next, random_done;
     reg [3:0] count, count_next; //to keep track of the shifts
      
-    always @ (posedge clock or posedge reset)
+    always @ (posedge clock or negedge reset)
     begin
-        if (reset)
+        if (!reset)
         begin
             random <= 15'hF; //An LFSR cannot have an all 0 state, thus reset to FF
             count <= 0;
