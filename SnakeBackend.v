@@ -45,7 +45,7 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 
 	snakeLogic sl(
 		.clk(clk),
-		.rst(reset_n),
+		.rst(out_reset_n),
 		.colour_in(colour_in),
 		.go(gameClock),
 		.dirIn(dirInControl),
@@ -84,6 +84,13 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 		row
 	);
 
+	drawBlackControl dbc(
+		clk,
+		reset_n,
+		dbWren,
+		out_reset_n
+		);
+
 	datapath dataPathUnit(
 		clk,
 		wren,
@@ -96,10 +103,41 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 		y_out
 	);
 	
-	assign plot = wren;
+	reg [7:0] d_x;
+	reg [6:0] d_y;
+	reg [2:0] dds_colour;
 
-	
-	
+	decideDrawState dds(
+		.b_x(black_x),
+		.b_y(black_y),
+		.d_x(d_x),
+		.d_y(d_y),
+		.colour_in(dds_colour),
+		.drawWren(food_en || wren),
+		.blackWren(blackWren),
+		.wren(plot),
+		.x_out(x_out),
+		.y_out(y_out)
+	);
+
+	always @(*)
+	begin
+		d_x = 0;
+		d_y = 0;
+		dds_colour = 0;
+		if (food_en)
+		begin
+			d_x = food_x;
+			d_y = food_y;
+			dds_colour = food_colour_out;
+		end
+		if (wren)
+		begin
+			d_x = snake_x;
+			d_y = snake_y;
+			dds_colour = colour_in;
+		end
+	end
 endmodule
 
 module rate_divider(

@@ -40,22 +40,28 @@ endmodule
 module drawBlackControl (
 		input clk,
 		input reset_n,
-		output reg dbWren
+		output reg dbWren,
+		output out_reset_n
 	);
 	reg [19:0] cnt; 
-	wire[31:0] count_to = 32'd25_000_000;
-	wire [31:0] cycles_needed = 32'd19_200;
+	wire[31:0] count_to = 32'd19_200;
+	wire [31:0] cycles_needed = ;
+
 
 	always @(posedge clk)
 	begin
 		dbWren <= 0;
 		if (!reset_n)
 			cnt <= 0;
-		if (cnt >= count_to - cycles_needed)
+		if (cnt < count_to)
+		begin
 			dbWren <= 1;
-		if (cnt >= count_to)
-			cnt <= 0;
-		cnt <= cnt + 1;
+			cnt <= cnt + 1;
+		end
+		else
+			cnt <= 32'd19_200;
 	end
+
+	assign out_reset_n = (cnt == 32'd19_200);
 
 endmodule

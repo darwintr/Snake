@@ -5,7 +5,6 @@ module controlMovement(
 	input [2:0] colour_in,
 	input [10:0] length, 
 	input go,
-
 	//---------------------------
 	output reg ld_head,
 	output reg ld_q_def,
@@ -99,7 +98,6 @@ module controlMovement(
 			end
 			else if (curr_state == DRAW_CURR || curr_state == DRAW_WHITE || curr_state == DRAW_FOOD) 
 				drawCounter <= drawCounter + 1;
-
 			curr_state <= next_state;
 		end
 	end
