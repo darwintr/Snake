@@ -1,6 +1,3 @@
-
-
-
 module rng (
     input clk,
     input rst,
@@ -24,7 +21,7 @@ module rng (
     begin
         if (!rst)
         begin
-            random <= 15'hF; //An LFSR cannot have an all 0 state, thus reset to FF
+            random <= 15'h3; //An LFSR cannot have an all 0 state, thus reset to FF
             count <= 0;
         end  
         else
@@ -36,6 +33,7 @@ module rng (
      
     always @ (*)
     begin
+    	random_done = 0;
         random_next = random; //default state stays the same
         count_next = count;
            

@@ -1,3 +1,4 @@
+`include "SnakeBackend.v"
 //RESETN = SW[0]
 
 //KEY[3:0] will be directions. UP DOWN LEFT RIGHT
@@ -19,7 +20,12 @@ module snake
 		VGA_SYNC_N,						//	VGA SYNC
 		VGA_R,   						//	VGA Red[9:0]
 		VGA_G,	 						//	VGA Green[9:0]
-		VGA_B   						//	VGA Blue[9:0]
+		VGA_B,   						//	VGA Blue[9:0]
+		HEX0,
+		HEX1,
+		HEX2,
+		HEX3,
+		LEDR
 	);
 
 	input			CLOCK_50;				//	50 MHz
@@ -39,7 +45,6 @@ module snake
 	
 	//RESET
 	wire rst = SW[0];
-
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
 	// image file (.MIF) for the controller.
@@ -66,6 +71,21 @@ module snake
 			
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
+	snakeInterface si(
+		.dirInControl(KEY[3:0]),
+		.clk(CLOCK_50),
+		.resetn(rst),
+		.color_in(SW[9:7]),
+		.colour_out(colour),
+		.x_out(x),
+		.y_out(y),
+		.plot(writeEn),
+		.HEX0(HEX0),
+		.HEX1(HEX1),
+		.HEX2(HEX2),
+		.HEX3(HEX3),
+		.LEDR(LEDR[0])
+		);
 
 
 endmodule

@@ -1,17 +1,17 @@
-`include "control.v"
-`include "datapath.v"
 `include "drawBlack.v"
+`include "snakeLogic.v"
 
-module ramInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, y_out, plot, HEX0, HEX1, HEX2, HEX3);
+module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, y_out, plot, HEX0, HEX1, HEX2, HEX3, LEDR);
 	input [3:0] dirInControl;
 	input clk;
 	input reset_n;
 	input [2:0] colour_in;
-	output [2:0] colour_out;
 	output [7:0] x_out;
 	output [6:0] y_out;
+	output [2:0] colour_out;
 	output plot;
 	output [3:0] HEX0, HEX1, HEX2, HEX3;
+	output LEDR;
 	
 	wire gameClock;
 	//DIRECTIONAL DATA.
@@ -26,17 +26,6 @@ module ramInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, y_
 	assign HEX1 = {1'b0, y_out[6:4]};
 	assign HEX0 = y_out[3:0];
 
-
-	dirControl directionalControl(
-		clk,
-		dirInControl,
-		reset_n,
-		dir
-	);
-	//END DIRECTIONAL DATA
-
-
-
 	//RATE DIVIDERS
 	rate_divider gameTick (
 		clk,
@@ -45,7 +34,18 @@ module ramInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, y_
 		gameClock
 	);
 
-
+	snakeLogic sl(
+		.clk(clk),
+		.rst(reset_n),
+		.colour_in(colour_in),
+		.go(gameClock),
+		.dirIn(dirInControl),
+	 	.length(),
+		.x(x_out),
+		.y(y_out),
+		.plotEn(plot),
+		.colour()
+		);
 
 	control controlUnit(
 		gameClock,
@@ -117,11 +117,6 @@ module dirControl(
 			dirOut[2] <= 0;
 		end
 	end
-	
-
-
-
-
 endmodule
 
 module rate_divider(
