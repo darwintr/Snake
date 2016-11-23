@@ -1,6 +1,7 @@
 module rng (
     input clk,
     input rst,
+    input [14:0] seed,
     output [14:0] rnd 
     );
 
@@ -16,35 +17,46 @@ module rng (
     reg [14:0] random, random_next, random_done;
     reg [3:0] count, count_next; //to keep track of the shifts
     wire feedback = random[14] ^ random[13]; 
-     
+    reg triggered;
     always @ (posedge clk or negedge rst)
     begin
         if (!rst)
         begin
-            random <= 15'h3; //An LFSR cannot have an all 0 state, thus reset to FF
+        	triggered <= 0;
+            random <= seed; //An LFSR cannot have an all 0 state, thus reset to FF
             count <= 0;
         end  
         else
         begin
+    		if (!triggered)
+    			random_done <= 15'd12432;
+    		else 
+    		begin
+				if (count == 15)
+		        begin
+		            
+		            random_done <= random; //assign the random number to output after 13 shifts
+		        end 
+    		end
+        	if (count == 15)
+        	begin
+        		count <= 0;
+        		triggered <= 1;
+        	end
             random <= random_next;
             count <= count_next;
         end
     end
-     
+    
     always @ (*)
     begin
-    	random_done = 0;
         random_next = random; //default state stays the same
         count_next = count;
            
         random_next = {random[14:0], feedback}; //shift left the xor'd every posedge clock
         count_next = count + 1;
      
-        if (count == 15)
-        begin
-            count = 0;
-            random_done = random; //assign the random number to output after 13 shifts
-        end 
+        
     end
      
      

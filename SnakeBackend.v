@@ -20,11 +20,20 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 	wire ld;
 	wire update;
 	wire row;
+	wire [7:0] head_x;
+	wire [6:0] head_y;
+	wire [10:0] length;
+
+	wire [7:0] food_x, snake_x, black_x;
+	wire [6:0] food_y, snake_y, black_y;
+
+	wire [2:0] food_colour_out, snake_colour_out, black_colour_out;
 	
-	assign HEX3 = x_out[7:4];
-	assign HEX2 = x_out[3:0];
-	assign HEX1 = {1'b0, y_out[6:4]};
-	assign HEX0 = y_out[3:0];
+	assign black_colour_out = 0;
+	assign HEX3 = head_x[7:4];
+	assign HEX2 = head_x[3:0];
+	assign HEX1 = {1'b0, head_y[6:4]};
+	assign HEX0 = head_y[3:0];
 
 	//RATE DIVIDERS
 	rate_divider gameTick (
@@ -40,23 +49,39 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 		.colour_in(colour_in),
 		.go(gameClock),
 		.dirIn(dirInControl),
-	 	.length(),
-		.x(x_out),
-		.y(y_out),
+	 	.length(length),
+		.x(snake_x),
+		.y(snake_y),
 		.plotEn(plot),
-		.colour()
+		.food_en(food_en),
+		.colour(snake_colour_out),
+		.head_x(head_x),
+		.head_y(head_y)
+		);
+
+	food f(
+		.clk(clk),
+		.rst(rst),
+		.h_x(head_x),
+		.h_y(head_y),
+		.dirControl(dirInControl),
+		.en(food_en),
+		.out_x(food_x),
+		.out_y(food_y),
+		.f_colour(food_colour_out),
+		.grow(length)
 		);
 
 	control controlUnit(
 		gameClock,
         reset_n, 
         clk,
-		  colour_in,
+	  	colour_in,
         wren,
         ld,
         update,
-		  colour_out,
-		  row
+		colour_out,
+		row
 	);
 
 	datapath dataPathUnit(
@@ -75,48 +100,6 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 
 	
 	
-endmodule
-
-
-//dirOut[1] == 0 => up and dirOut[0] == 0 => Left.
-module dirControl(
-		input clk,
-		input [3:0] dir,
-		input reset_n,
-		output reg [2:0] dirOut
-	);
-	
-	wire input1 = dir[3];
-	wire input2 = dir[2];
-	wire input3 = dir[1];
-	wire input4 = dir[0];
-	
-	always @(posedge clk)
-	begin
-		if (!reset_n)
-			dirOut <= 0;
-			
-		if (input1 == 0)
-		begin
-			dirOut[1] <= 0;
-			dirOut[2] <= 1;
-		end
-		else if (input2 == 0)
-		begin
-			dirOut[1] <= 1;
-			dirOut[2] <= 1;
-		end
-		else if (input3 == 0)
-		begin
-			dirOut[0] <= 0;
-			dirOut[2] <= 0;
-		end
-		else if (input4 == 0)
-		begin
-			dirOut[0] <= 1;
-			dirOut[2] <= 0;
-		end
-	end
 endmodule
 
 module rate_divider(

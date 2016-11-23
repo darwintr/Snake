@@ -19,7 +19,8 @@ module controlMovement(
 	output reg ld_prev_into_q,
 	output reg ld_curr_into_prev,
 	output reg [2:0] colour_out,
-	output reg draw_curr
+	output reg draw_curr,
+	output reg food_en
 );	
 	
 	reg [10:0] counter;
@@ -46,7 +47,9 @@ module controlMovement(
 		CLOCK4 = 5'd15,
 		RST3 = 5'd16,
 		DRAW_CURR = 5'd17,
-		WAIT = 5'd18;
+		WAIT = 5'd18,
+		DRAW_FOOD = 5'd19,
+		RST4 = 5'd20;
 
 
 	always @(*)
@@ -69,9 +72,10 @@ module controlMovement(
 			LD_CURR_PREV: next_state = cnt_le_l ? CLOCK4 : RST3;
 			CLOCK4: next_state = LD_Q_CURR;
 			RST3: next_state = WAIT;
+			DRAW_FOOD: next_state = draw_le_3 ? DRAW_FOOD : RST1;
 			WAIT: next_state = go ? DRAW_CURR : WAIT;
-
-			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : RST1;
+			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : RST4;
+			RST4: next_state = DRAW_FOOD;
 		default: next_state = LD_HEAD;
 		endcase
 	end
@@ -84,7 +88,7 @@ module controlMovement(
 			drawCounter <= 0;
 		end
 		else begin
-			if (curr_state == RST1 || curr_state == RST2 || curr_state == RST3)
+			if (curr_state == RST1 || curr_state == RST2 || curr_state == RST3 || curr_state == RST4)
 			begin
 				counter <= 0;
 				drawCounter <= 0;
@@ -93,7 +97,7 @@ module controlMovement(
 			begin
 				counter <= counter + 1;
 			end
-			else if (curr_state == DRAW_CURR || curr_state == DRAW_WHITE)
+			else if (curr_state == DRAW_CURR || curr_state == DRAW_WHITE || curr_state == DRAW_FOOD) 
 				drawCounter <= drawCounter + 1;
 
 			curr_state <= next_state;
@@ -115,6 +119,7 @@ module controlMovement(
 		ld_curr_into_prev = 0;
 		colour_out = 3'b0;
 		draw_curr = 0;
+		food_en = 0;
 		case (curr_state)
 			LD_HEAD : ld_head = 1;
 			LD_DEF : ld_q_def = 1;
@@ -145,7 +150,7 @@ module controlMovement(
 				draw_curr = 1;
 				cnt_status = drawCounter;
 			end
-			
+			DRAW_FOOD: food_en = 1;
 
 		endcase
 	end

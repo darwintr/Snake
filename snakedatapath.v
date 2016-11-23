@@ -22,14 +22,15 @@ module datapath(
 	output reg isDead,
 	output reg plotEn,
 	output reg [7:0] x,
-	output reg [6:0] y
+	output reg [6:0] y,
+	output reg [14:0] head
 	
 );
 	wire [14:0] ram_out;
 	reg [14:0] ram_in;
 	reg ram_wren;
 	reg [10:0] address;
-	reg [14:0] curr, prev, head;
+	reg [14:0] curr, prev;
 
 	ram r0(
 		.address(address),
