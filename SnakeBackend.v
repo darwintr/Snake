@@ -1,5 +1,9 @@
 `include "drawBlack.v"
 `include "snakeLogic.v"
+`include "mux.v"
+`include "food.v"
+`include "movementReader.v"
+`include "snakeMovement.v"
 
 module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, y_out, plot, HEX0, HEX1, HEX2, HEX3, LEDR);
 	input [3:0] dirInControl;
@@ -52,9 +56,9 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 	 	.length(length),
 		.x(snake_x),
 		.y(snake_y),
-		.plotEn(plot),
+		.plotEn(wren),
 		.food_en(food_en),
-		.colour(snake_colour_out),
+		.colour_out(snake_colour_out),
 		.head_x(head_x),
 		.head_y(head_y)
 		);
@@ -72,36 +76,12 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 		.grow(length)
 		);
 
-	control controlUnit(
-		gameClock,
-        reset_n, 
-        clk,
-	  	colour_in,
-        wren,
-        ld,
-        update,
-		colour_out,
-		row
-	);
-
 	drawBlackControl dbc(
 		clk,
 		reset_n,
 		dbWren,
 		out_reset_n
 		);
-
-	datapath dataPathUnit(
-		clk,
-		wren,
-		ld,
-		dir,
-		update,
-		reset_n,
-		row,
-		x_out,
-		y_out
-	);
 	
 	reg [7:0] d_x;
 	reg [6:0] d_y;

@@ -45,7 +45,7 @@ module drawBlackControl (
 	);
 	reg [19:0] cnt; 
 	wire[31:0] count_to = 32'd19_200;
-	wire [31:0] cycles_needed = ;
+
 
 
 	always @(posedge clk)
