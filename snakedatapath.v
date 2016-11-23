@@ -15,8 +15,10 @@ module datapath(
 	input ld_prev_into_q,
 	input ld_curr_into_prev,
 	input draw_curr,
+
 	input [2:0] dir,
-	
+
+
 	output reg isDead,
 	output reg plotEn,
 	output reg [7:0] x,
@@ -81,7 +83,7 @@ module datapath(
 	always @(*) begin
 		ram_in = 0;
 		ram_wren = 0;
-		isDead = 0;
+		isDead = ram_out == head && address != 0;
 		plotEn = 0;
 		x = 0;
 		y = 0;
