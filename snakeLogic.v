@@ -3,6 +3,7 @@
 `include "snakedatapath.v"
 
 
+
 module snakeLogic(clk, rst, dirIn, go, colour_in, x, y, plotEn, colour_out, head_x, head_y, isDead);
 	input clk; 
 	input rst;

@@ -8,10 +8,10 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 	input clk;
 	input reset_n;
 	input [2:0] colour_in;
-	output [7:0] x_out;
-	output [6:0] y_out;
-	output [2:0] colour_out;
-	output plot;
+	output reg [7:0] x_out;
+	output reg [6:0] y_out;
+	output reg [2:0] colour_out;
+	output reg plot;
 	output [3:0] HEX0, HEX1, HEX2, HEX3;
 	output [9:0] LEDR;
 	
@@ -29,8 +29,13 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 	rate_divider gameTick (
 		clk,
 		reset_n,
+<<<<<<< HEAD
 		//32'd100,
 		32'd10_000_000, 
+=======
+		32'd100,
+		//32'd25_000_000, 
+>>>>>>> 7f1834a10d0e4bcb1e40ea39a9a1bb81ef4a9ccd
 		gameClock
 	);
 	snakeLogic sl(
@@ -46,10 +51,48 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 		.head_x(head_x),
 		.head_y(head_y),
 		.isDead(LEDR[0])
+<<<<<<< HEAD
 	);
 
 
 
+=======
+		);
+
+	food f(
+		.clk(clk),
+		.rst(reset_n),
+		.h_x(head_x),
+		.h_y(head_y),
+		.dirControl(dirInControl),
+		.en(food_en),
+		.out_x(food_x),
+		.out_y(food_y),
+		.f_colour(food_colour_out),
+		.grow(length)
+	);
+
+	always @(*)
+	begin
+		plot = wren | food_en;
+		x_out = 8'b0;
+		y_out = 7'b0;
+		colour_out = 0;
+		if (wren)
+		begin
+			x_out = snake_x;
+			y_out = snake_y;
+			colour_out = snake_colour_out;
+		end
+
+		if (food_en)
+		begin
+			x_out = food_x;
+			y_out = food_y;
+		end
+	end
+
+>>>>>>> 7f1834a10d0e4bcb1e40ea39a9a1bb81ef4a9ccd
 	
 endmodule
 
