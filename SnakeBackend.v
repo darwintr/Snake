@@ -29,13 +29,8 @@ module snakeInterface(dirInControl, clk, reset_n, colour_in, colour_out, x_out, 
 	rate_divider gameTick (
 		clk,
 		reset_n,
-<<<<<<< HEAD
 		//32'd100,
 		32'd10_000_000, 
-=======
-		32'd100,
-		//32'd25_000_000, 
->>>>>>> 7f1834a10d0e4bcb1e40ea39a9a1bb81ef4a9ccd
 		gameClock
 	);
 	snakeLogic sl(
