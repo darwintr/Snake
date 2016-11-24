@@ -3,8 +3,9 @@ module controlMovement(
 	input clk,
 	input rst,
 	input [2:0] colour_in,
-	input [10:0] length, 
+	input length_inc,
 	input go,
+	input fromBlack,
 	//---------------------------
 	output reg ld_head,
 	output reg ld_q_def,
@@ -20,12 +21,15 @@ module controlMovement(
 	output reg [2:0] colour_out,
 	output reg draw_curr,
 	output reg food_en,
-	output reg waiting
+	output reg inc_length_check
 );	
 	
 	reg [10:0] counter;
 	reg [1:0] drawCounter;
 	reg [4:0] curr_state, next_state;
+	reg [10:0] length;
+	reg [7:0] x_counter;
+	reg [6:0] y_counter;
 	wire cnt_le_l = counter < length - 1;
 	wire draw_le_3 = drawCounter < 3;
 	localparam 
@@ -49,12 +53,15 @@ module controlMovement(
 		DRAW_CURR = 5'd17,
 		WAIT = 5'd18,
 		DRAW_FOOD = 5'd19,
-		RST4 = 5'd20;
+		RST4 = 5'd20,
+		INC_LENGTH = 5'd21,
+		WAIT_BLACK = 5'd22;
 
 
 	always @(*)
 	begin: stateTable
 		case (curr_state)
+			WAIT_BLACK: next_state = fromBlack ? LD_HEAD : WAIT_BLACK;
 			LD_HEAD : next_state = LD_DEF;
 			LD_DEF : next_state = CLOCK1;
 			CLOCK1 : next_state = INC1;
@@ -63,8 +70,8 @@ module controlMovement(
 			CLOCK2: next_state = DRAW_WHITE;
 			DRAW_WHITE: next_state = draw_le_3 ? DRAW_WHITE : INC2;
 			INC2: next_state = cnt_le_l ? CLOCK2 : RST2;
-			RST2: next_state = UPDATE_HEAD;
-			UPDATE_HEAD: next_state = LD_HEAD_PREV;
+			RST2: next_state = DRAW_FOOD;
+			UPDATE_HEAD: next_state = INC_LENGTH;
 			LD_HEAD_PREV: next_state = LD_Q_CURR;
 			LD_Q_CURR: next_state = LD_PREV_Q;
 			LD_PREV_Q: next_state = CLOCK3;
@@ -72,20 +79,23 @@ module controlMovement(
 			LD_CURR_PREV: next_state = cnt_le_l ? CLOCK4 : RST3;
 			CLOCK4: next_state = LD_Q_CURR;
 			RST3: next_state = WAIT;
-			DRAW_FOOD: next_state = draw_le_3 ? DRAW_FOOD : RST1;
+			DRAW_FOOD: next_state = draw_le_3 ? DRAW_FOOD : RST4;
 			WAIT: next_state = go ? DRAW_CURR : WAIT;
-			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : RST4;
-			RST4: next_state = DRAW_FOOD;
-		default: next_state = LD_HEAD;
+			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : RST1;
+			RST4: next_state = UPDATE_HEAD;
+			INC_LENGTH: next_state = LD_HEAD_PREV;
+		default: next_state = fromBlack;
 		endcase
 	end
 	
 	always @(posedge clk, negedge rst) begin
 		if (!rst) begin
 			// reset
-			curr_state <= LD_HEAD;
+			curr_state <= fromBlack;
 			counter <= 0;
 			drawCounter <= 0;
+			length <= 11'd3;
+
 		end
 		else begin
 			if (curr_state == RST1 || curr_state == RST2 || curr_state == RST3 || curr_state == RST4)
@@ -99,7 +109,13 @@ module controlMovement(
 			end
 			else if (curr_state == DRAW_CURR || curr_state == DRAW_WHITE || curr_state == DRAW_FOOD) 
 				drawCounter <= drawCounter + 1;
+
+			if (length_inc)
+				length <= length + 1;
+
+
 			curr_state <= next_state;
+
 		end
 	end
 
@@ -119,9 +135,7 @@ module controlMovement(
 		colour_out = 3'b0;
 		draw_curr = 0;
 		food_en = 0;
-		waiting = 0;
-		if (next_state == WAIT)
-			waiting = 1;
+		inc_length_check = 0;
 		case (curr_state)
 			LD_HEAD : ld_head = 1;
 			LD_DEF : ld_q_def = 1;
@@ -131,10 +145,10 @@ module controlMovement(
 				draw_q = 1;
 				cnt_status = drawCounter;
 				if (counter == 0) begin
-					colour_out = 3'b100;
+					colour_out <= 3'b100;
 				end
 				else begin
-					colour_out = colour_in;
+					colour_out <= colour_in;
 				end
 			end
 			INC2: inc_address = 1;
@@ -154,12 +168,10 @@ module controlMovement(
 			end
 			DRAW_FOOD: begin
 				food_en = 1;
-				
 				cnt_status = drawCounter;
 				colour_out = 3'b010;
 			end
-			
-
+			INC_LENGTH: inc_length_check = 1;
 		endcase
 	end
 

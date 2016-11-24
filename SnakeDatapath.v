@@ -1,8 +1,9 @@
 `include "ram.v"
 module datapath(
-	input waiting,
 	input clk,
 	input rst,
+	input lock,
+	input check_inc,
 
 	input ld_head,
 	input ld_q_def,
@@ -25,15 +26,17 @@ module datapath(
 	output reg [7:0] x,
 	output reg [6:0] y,
 	output reg [14:0] head,
-	output reg [10:0] length
+	output reg inc_length
 );
 	wire [14:0] ram_out;
 	reg [14:0] ram_in;
 	reg ram_wren;
 	reg [10:0] address;
 	reg [14:0] curr, prev;
-	reg [7:0] food_x;
-	reg [6:0] food_y;
+	reg [7:0] food_x, temp_food_x, x_counter;
+	reg [6:0] food_y, temp_food_y, y_counter;
+
+
 	ram r0(
 		.address(address),
 		.clock(clk),
@@ -47,25 +50,23 @@ module datapath(
 	
 	wire [14:0] foodTotal = {food_x, food_y};
 
+
+
 	always @(posedge clk, negedge rst) begin
 		if (!rst) begin
 			address <= 0;
 			curr <= 0;
 			prev <= 0;
 			head <= 0;
-			food_x <= 8'd32;
-			food_y <= 7'd32;
-			length <= 11'd6;
+			food_x <= 8'd58;
+			food_y <= 7'd58;
+			isDead <= 0;
+			temp_food_x <= 0;
+			temp_food_y <= 0;
+			x_counter <= 0;
+			y_counter <= 0;
 		end
 		else begin
-			if (ram_out == head && address != 0)
-			begin
-				isDead <= 1;
-			end
-			else
-			begin
-				isDead <= 0;
-			end
 			if (ld_head)
 				head <= {def_x, def_y};
 			if (update_head)
@@ -110,27 +111,46 @@ module datapath(
 				curr <= ram_out;
 			if (ld_curr_into_prev)
 				prev <= curr;
-			if (waiting)
-				if (head == foodTotal)
-					length <= length + 11'd1;
-			
+			if (address != 0 && ram_out == head && draw_q)
+				isDead <= 1;
+			x_counter <= x_counter + 1;
+			y_counter <= y_counter + 1;
+			if (x_counter > 8'd160)
+				x_counter <= 0;
+
+			if (y_counter > 7'd120)
+				y_counter <= 0;
+
+			if (lock)
+			begin
+				temp_food_x <= x_counter;
+				temp_food_y <= y_counter;
+			end
+			if (inc_length)
+			begin
+				food_x <= temp_food_x;
+				food_y <= temp_food_y;
+			end
 		end
 	end
 
 	always @(*) begin
 		ram_in = 0;
 		ram_wren = 0;
-		
 		plotEn = 0;
 		x = 0;
 		y = 0;
+		inc_length = 0;
+
+
 		if (ld_q_def)
 		begin
-			ram_in = {def_x, def_y + address[6:0]};
+			ram_in = {def_x, def_y + address[6:0] + address[6:0]};
 			ram_wren = 1;
 		end
 		if (draw_q)
 		begin
+			
 			plotEn = 1;
 			x = ram_out[14:7] + cnt_status[1];
 			y = ram_out[6:0] + cnt_status[0];
@@ -151,6 +171,10 @@ module datapath(
 			plotEn = 1;
 			x = food_x + cnt_status[1];
 			y = food_y + cnt_status[0];
+		end
+		if (check_inc)
+		begin
+			inc_length = foodTotal == head;
 		end
 	end
 endmodule 

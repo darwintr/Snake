@@ -3,6 +3,7 @@ module dirControl(
 		input clk,
 		input [3:0] dir,
 		input reset_n,
+		output reg lockVal,
 		output reg [2:0] dirOut
 	);
 	
@@ -13,29 +14,34 @@ module dirControl(
 	
 	always @(posedge clk, negedge reset_n)
 	begin
+		lockVal <= 0;
 		if (!reset_n)
 			dirOut <= 3'b0;
 		else
 		begin
-			if (input1 == 1'b0)
+			if (input1 == 1'b0 && dirOut[2:1] != 2'b11)
 			begin
 				dirOut[1] <= 0;
 				dirOut[2] <= 1;
+				lockVal <= 1;
 			end
-			else if (input2 == 1'b0)
+			if (input2 == 1'b0 && dirOut[2:1] != 2'b10)
 			begin
 				dirOut[1] <= 1;
 				dirOut[2] <= 1;
+				lockVal <= 1;
 			end
-			else if (input3 == 1'b0)
+			if (input3 == 1'b0 && dirOut[2] != 0 && dirOut[0] != 1)
 			begin
 				dirOut[0] <= 0;
 				dirOut[2] <= 0;
+				lockVal <= 1;
 			end
-			else if (input4 == 1'b0)
+			if (input4 == 1'b0 && dirOut[2] != 0 && dirOut[0] != 0)
 			begin
 				dirOut[0] <= 1;
 				dirOut[2] <= 0;
+				lockVal <= 1;
 			end
 		end
 	end
