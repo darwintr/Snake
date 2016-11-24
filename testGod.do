@@ -12,8 +12,8 @@ log {/*}
 add wave {/*}
 
 force {clk} 0 0 ns, 1 10 ns -r 20 ns
-force {rst} 1 0 ns, 0 1 ns, 1 2 ns
-force {dirInControl} 0000
+force {reset_n} 1 0 ns, 0 1 ns, 1 2 ns
+force {dirInControl} 1101 0 ns, 1111 2000 ns, 1110 4000 ns 
 force {colour_in} 111
 
-run 2000 ns
+run 20000 ns

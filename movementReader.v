@@ -14,26 +14,29 @@ module dirControl(
 	always @(posedge clk, negedge reset_n)
 	begin
 		if (!reset_n)
-			dirOut <= 0;
-		if (input1 == 0)
+			dirOut <= 3'b0;
+		else
 		begin
-			dirOut[1] <= 0;
-			dirOut[2] <= 1;
-		end
-		else if (input2 == 0)
-		begin
-			dirOut[1] <= 1;
-			dirOut[2] <= 1;
-		end
-		else if (input3 == 0)
-		begin
-			dirOut[0] <= 0;
-			dirOut[2] <= 0;
-		end
-		else if (input4 == 0)
-		begin
-			dirOut[0] <= 1;
-			dirOut[2] <= 0;
+			if (input1 == 1'b0)
+			begin
+				dirOut[1] <= 0;
+				dirOut[2] <= 1;
+			end
+			else if (input2 == 1'b0)
+			begin
+				dirOut[1] <= 1;
+				dirOut[2] <= 1;
+			end
+			else if (input3 == 1'b0)
+			begin
+				dirOut[0] <= 0;
+				dirOut[2] <= 0;
+			end
+			else if (input4 == 1'b0)
+			begin
+				dirOut[0] <= 1;
+				dirOut[2] <= 0;
+			end
 		end
 	end
 endmodule

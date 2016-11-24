@@ -19,7 +19,8 @@ module controlMovement(
 	output reg ld_curr_into_prev,
 	output reg [2:0] colour_out,
 	output reg draw_curr,
-	output reg food_en
+	output reg food_en,
+	output reg waiting
 );	
 	
 	reg [10:0] counter;
@@ -118,6 +119,9 @@ module controlMovement(
 		colour_out = 3'b0;
 		draw_curr = 0;
 		food_en = 0;
+		waiting = 0;
+		if (next_state == WAIT)
+			waiting = 1;
 		case (curr_state)
 			LD_HEAD : ld_head = 1;
 			LD_DEF : ld_q_def = 1;
@@ -127,10 +131,10 @@ module controlMovement(
 				draw_q = 1;
 				cnt_status = drawCounter;
 				if (counter == 0) begin
-					colour_out <= 3'b100;
+					colour_out = 3'b100;
 				end
 				else begin
-					colour_out <= colour_in;
+					colour_out = colour_in;
 				end
 			end
 			INC2: inc_address = 1;
@@ -148,7 +152,13 @@ module controlMovement(
 				draw_curr = 1;
 				cnt_status = drawCounter;
 			end
-			DRAW_FOOD: food_en = 1;
+			DRAW_FOOD: begin
+				food_en = 1;
+				
+				cnt_status = drawCounter;
+				colour_out = 3'b010;
+			end
+			
 
 		endcase
 	end

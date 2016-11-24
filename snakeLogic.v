@@ -3,13 +3,13 @@
 `include "snakedatapath.v"
 
 
-module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, food_en, colour_out, head_x, head_y);
+module snakeLogic(clk, rst, dirIn, go, colour_in, x, y, plotEn, colour_out, head_x, head_y, isDead);
 	input clk; 
 	input rst;
 	input [2:0] colour_in;
 	input go;
 	input [3:0] dirIn;
-	input [10:0] length;
+	
 
 	output [7:0] x;
 	output [6:0] y;
@@ -17,15 +17,14 @@ module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, food_en,
 	output [2:0] colour_out;
 	output [7:0] head_x;
 	output [6:0] head_y;
-	output food_en;
 	wire [1:0] cnt_status;
 	wire [2:0] dirContOut;
-	wire isDead;
+	output isDead;
 	wire [14:0] head;
 
 	assign head_x = head[14:7];
 	assign head_y = head[6:0];
-
+	wire [10:0] length;
 
 	dirControl dirModule(
 			.clk(clk),
@@ -55,10 +54,12 @@ module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, food_en,
 			ld_curr_into_prev,
 			colour_out,
 			draw_curr,
-			food_en
+			food_en,
+			waiting
 		);
 
 	datapath dp(
+			waiting,
 			clk,
 			rst,
 			ld_head,
@@ -73,12 +74,14 @@ module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, food_en,
 			ld_prev_into_q,
 			ld_curr_into_prev,
 			draw_curr,
+			food_en,
 			dirContOut,
 			isDead,
-			plotEn,
+			plotEn,	
 			x,
 			y,
-			head
+			head,
+			length
 		);
 
 

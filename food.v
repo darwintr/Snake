@@ -26,7 +26,7 @@ module food(clk, rst, h_x, h_y, dirControl, en, out_x, out_y, f_colour, grow);
 	wire head_in_food = x == h_x && y == h_y;
 	reg [1:0] food_cnt;
 
-	always @(negedge rst, posedge clk)
+	always @(posedge clk, negedge rst)
 	begin
 		if (!rst)
 		begin
@@ -36,6 +36,7 @@ module food(clk, rst, h_x, h_y, dirControl, en, out_x, out_y, f_colour, grow);
 			out_y <= 0;
 			food_cnt <= 0;
 			grow <= 11'd6;
+			f_colour <= 3'b010;
 		end
 		else if (head_in_food)
 		begin
@@ -47,6 +48,8 @@ module food(clk, rst, h_x, h_y, dirControl, en, out_x, out_y, f_colour, grow);
 		begin
 			if (en)
 			begin
+				x <= x - x%4;
+				y <= y - y%4;
 				food_cnt <= food_cnt + 1;
 				out_x <= x + food_cnt[0];
 				out_y <= y + food_cnt[1];
