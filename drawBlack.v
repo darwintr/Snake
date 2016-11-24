@@ -44,8 +44,9 @@ module drawBlackControl (
 		output out_reset_n
 	);
 	reg [19:0] cnt; 
-	wire[31:0] count_to = 32'd19_200;
-
+	wire[31:0] count_to;
+	//assign count_to = 32'd19_200;
+	assign count_to = 32'd3;
 
 
 	always @(posedge clk)
@@ -59,9 +60,9 @@ module drawBlackControl (
 			cnt <= cnt + 1;
 		end
 		else
-			cnt <= 32'd19_200;
+			cnt <= count_to;
 	end
 
-	assign out_reset_n = (cnt == 32'd19_200);
+	assign out_reset_n = (cnt == count_to);
 
 endmodule

@@ -36,6 +36,7 @@ module food(clk, rst, h_x, h_y, dirControl, en, out_x, out_y, f_colour, grow);
 			out_y <= 0;
 			food_cnt <= 0;
 			grow <= 11'd6;
+			f_colour <= 0;
 		end
 		else if (head_in_food)
 		begin

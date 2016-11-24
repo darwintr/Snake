@@ -3,7 +3,7 @@
 `include "snakedatapath.v"
 
 
-module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, food_en, colour_out, head_x, head_y);
+module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, food_en, colour_out, head_x, head_y, isDead);
 	input clk; 
 	input rst;
 	input [2:0] colour_in;
@@ -20,7 +20,7 @@ module snakeLogic(clk, rst, dirIn, go, length, colour_in, x, y, plotEn, food_en,
 	output food_en;
 	wire [1:0] cnt_status;
 	wire [2:0] dirContOut;
-	wire isDead;
+	output isDead;
 	wire [14:0] head;
 
 	assign head_x = head[14:7];
