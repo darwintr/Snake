@@ -24,7 +24,9 @@ module snakeInterface(
 	wire [1:0] cnt_status;
 	wire [2:0] dirContOut;
 	wire [14:0] head;
-	
+	wire isDead;	
+
+	assign LEDR[0] = isDead;
 	always @(*) begin
 		head_x = head[14:7];
 		head_y = head[6:0];
@@ -57,6 +59,7 @@ module snakeInterface(
 		length_inc, 
 		gameClock,
 		fromBlack,
+		isDead,
 		ld_head,
 		ld_q_def,
 		inc_address,
@@ -93,7 +96,7 @@ module snakeInterface(
 		draw_curr,
 		food_en,
 		dirContOut,
-		LEDR[0], //TIS THE DEAD SIGNAL!
+		isDead, //TIS THE DEAD SIGNAL!
 		plot,	
 		x_out,
 		y_out,

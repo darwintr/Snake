@@ -6,6 +6,7 @@ module controlMovement(
 	input length_inc,
 	input go,
 	input fromBlack,
+	input isDead,
 	//---------------------------
 	output reg ld_head,
 	output reg ld_q_def,
@@ -84,21 +85,24 @@ module controlMovement(
 			DRAW_CURR: next_state = draw_le_3 ? DRAW_CURR : RST1;
 			RST4: next_state = UPDATE_HEAD;
 			INC_LENGTH: next_state = LD_HEAD_PREV;
-		default: next_state = fromBlack;
+		default: next_state = WAIT_BLACK;
 		endcase
+		if (isDead)
+			next_state = WAIT_BLACK;
+
 	end
 	
 	always @(posedge clk, negedge rst) begin
 		if (!rst) begin
 			// reset
-			curr_state <= fromBlack;
+			curr_state <= WAIT_BLACK;
 			counter <= 0;
 			drawCounter <= 0;
 			length <= 11'd3;
 
 		end
 		else begin
-			if (curr_state == RST1 || curr_state == RST2 || curr_state == RST3 || curr_state == RST4)
+			if (curr_state == WAIT_BLACK || curr_state == RST1 || curr_state == RST2 || curr_state == RST3 || curr_state == RST4)
 			begin
 				counter <= 0;
 				drawCounter <= 0;
@@ -172,6 +176,8 @@ module controlMovement(
 				colour_out = 3'b010;
 			end
 			INC_LENGTH: inc_length_check = 1;
+			WAIT_BLACK:
+				rst_address = 1;
 		endcase
 	end
 

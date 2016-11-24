@@ -123,8 +123,8 @@ module datapath(
 
 			if (lock)
 			begin
-				temp_food_x <= x_counter;
-				temp_food_y <= y_counter;
+				temp_food_x <= x_counter - x_counter%4;
+				temp_food_y <= y_counter - y_counter%4;
 			end
 			if (inc_length)
 			begin
