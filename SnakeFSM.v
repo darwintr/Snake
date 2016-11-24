@@ -13,7 +13,7 @@ module controlMovement(
 	output reg inc_address,
 	output reg rst_address,
 	output reg draw_q,
-	output reg [1:0] cnt_status,
+	output reg [3:0] cnt_status,
 	output reg update_head,
 	output reg ld_head_into_prev,
 	output reg ld_q_into_curr,
@@ -26,13 +26,13 @@ module controlMovement(
 );	
 	
 	reg [10:0] counter;
-	reg [1:0] drawCounter;
+	reg [3:0] drawCounter;
 	reg [4:0] curr_state, next_state;
 	reg [10:0] length;
 	reg [7:0] x_counter;
 	reg [6:0] y_counter;
 	wire cnt_le_l = counter < length - 1;
-	wire draw_le_3 = drawCounter < 3;
+	wire draw_le_3 = drawCounter < 8;
 	localparam 
 		LD_HEAD = 5'd0,
 		LD_DEF = 5'd1,
@@ -110,9 +110,11 @@ module controlMovement(
 			else if (curr_state == INC1 || curr_state == INC2 || curr_state == LD_CURR_PREV)
 			begin
 				counter <= counter + 1;
+				drawCounter <= 0;
 			end
 			else if (curr_state == DRAW_CURR || curr_state == DRAW_WHITE || curr_state == DRAW_FOOD) 
 				drawCounter <= drawCounter + 1;
+
 
 			if (length_inc)
 				length <= length + 1;

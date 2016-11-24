@@ -10,7 +10,7 @@ module datapath(
 	input inc_address,
 	input rst_address,
 	input draw_q,
-	input [1:0] cnt_status,
+	input [3:0] cnt_status,
 	input update_head,
 	input ld_head_into_prev,
 	input ld_q_into_curr,
@@ -58,8 +58,8 @@ module datapath(
 			curr <= 0;
 			prev <= 0;
 			head <= 0;
-			food_x <= 8'd58;
-			food_y <= 7'd58;
+			food_x <= 8'd30;
+			food_y <= 7'd30;
 			isDead <= 0;
 			temp_food_x <= 0;
 			temp_food_y <= 0;
@@ -115,7 +115,7 @@ module datapath(
 				isDead <= 1;
 			x_counter <= x_counter + 1;
 			y_counter <= y_counter + 1;
-			if (x_counter > 8'd160)
+			if (x_counter > 8'd156)
 				x_counter <= 0;
 
 			if (y_counter > 7'd120)
@@ -123,8 +123,8 @@ module datapath(
 
 			if (lock)
 			begin
-				temp_food_x <= x_counter - x_counter%4;
-				temp_food_y <= y_counter - y_counter%4;
+				temp_food_x <= x_counter - x_counter%3;
+				temp_food_y <= y_counter - y_counter%3;
 			end
 			if (inc_length)
 			begin
@@ -145,21 +145,25 @@ module datapath(
 
 		if (ld_q_def)
 		begin
-			ram_in = {def_x, def_y + address[6:0] + address[6:0]};
+			ram_in = {def_x, def_y + address[6:0] + address[6:0] + address[6:0]};
 			ram_wren = 1;
 		end
 		if (draw_q)
 		begin
 			
 			plotEn = 1;
-			x = ram_out[14:7] + cnt_status[1];
-			y = ram_out[6:0] + cnt_status[0];
+			x = ram_out[14:7] + cnt_status/3;
+			y = ram_out[6:0] + cnt_status%3;
 		end
 		if (draw_curr)
 		begin
+			if (address == 0 && head == foodTotal)
+			begin
+				
+			end
 			plotEn = 1;
-			x = curr[14:7] + cnt_status[1];
-			y = curr[6:0] + cnt_status[0];
+			x = curr[14:7] + cnt_status/3;
+			y = curr[6:0] + cnt_status%3;
 		end
 		if (ld_prev_into_q)
 		begin
@@ -169,8 +173,8 @@ module datapath(
 		if (food_en)
 		begin
 			plotEn = 1;
-			x = food_x + cnt_status[1];
-			y = food_y + cnt_status[0];
+			x = food_x + cnt_status/3;
+			y = food_y + cnt_status%3;
 		end
 		if (check_inc)
 		begin

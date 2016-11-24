@@ -21,7 +21,7 @@ module snakeInterface(
 							//Signal for draw black.
 	reg [7:0] head_x;
 	reg [6:0] head_y;
-	wire [1:0] cnt_status;
+	wire [3:0] cnt_status;
 	wire [2:0] dirContOut;
 	wire [14:0] head;
 	wire isDead;	
