@@ -29,8 +29,6 @@ module controlMovement(
 	reg [3:0] drawCounter;
 	reg [4:0] curr_state, next_state;
 	reg [10:0] length;
-	reg [7:0] x_counter;
-	reg [6:0] y_counter;
 	wire cnt_le_l = counter < length - 1;
 	wire draw_le_3 = drawCounter < 8;
 	localparam 
@@ -100,27 +98,38 @@ module controlMovement(
 			drawCounter <= 0;
 			length <= 11'd3;
 
+
 		end
 		else begin
-			if (curr_state == WAIT_BLACK || curr_state == RST1 || curr_state == RST2 || curr_state == RST3 || curr_state == RST4)
+			if (
+				curr_state == WAIT_BLACK || 
+				curr_state == RST1 || 
+				curr_state == RST2 ||
+				curr_state == RST3 || 
+				curr_state == RST4)
 			begin
 				counter <= 0;
 				drawCounter <= 0;
 			end
-			else if (curr_state == INC1 || curr_state == INC2 || curr_state == LD_CURR_PREV)
+			if (curr_state == INC1 || 
+				curr_state == INC2 || 
+				curr_state == LD_CURR_PREV)
 			begin
 				counter <= counter + 1;
 				drawCounter <= 0;
 			end
-			else if (curr_state == DRAW_CURR || curr_state == DRAW_WHITE || curr_state == DRAW_FOOD) 
+			if (curr_state == DRAW_CURR || 
+				curr_state == DRAW_WHITE || 
+				curr_state == DRAW_FOOD) 
 				drawCounter <= drawCounter + 1;
 
+			curr_state <= next_state;
 
 			if (length_inc)
 				length <= length + 1;
 
 
-			curr_state <= next_state;
+			
 
 		end
 	end

@@ -35,7 +35,7 @@ module datapath(
 	reg [14:0] curr, prev;
 	reg [7:0] food_x, temp_food_x, x_counter;
 	reg [6:0] food_y, temp_food_y, y_counter;
-
+	reg anicond;
 
 	ram r0(
 		.address(address),
@@ -65,6 +65,7 @@ module datapath(
 			temp_food_y <= 0;
 			x_counter <= 0;
 			y_counter <= 0;
+			anicond <= 0;
 		end
 		else begin
 			if (ld_head)
@@ -131,9 +132,13 @@ module datapath(
 				food_x <= temp_food_x;
 				food_y <= temp_food_y;
 			end
+			if (address == 0 && head == foodTotal)
+				anicond <= 1;
+			if (food_en)
+				anicond <= 0;
 		end
 	end
-
+	
 	always @(*) begin
 		ram_in = 0;
 		ram_wren = 0;
@@ -150,7 +155,8 @@ module datapath(
 		end
 		if (draw_q)
 		begin
-			if (address == 0 && head == foodTotal)
+
+			if (anicond)
 			begin
 				if (cnt_status != 3'd2 && cnt_status != 3'd3 && cnt_status != 8)
 				begin
@@ -159,8 +165,8 @@ module datapath(
 				end
 				else
 				begin
-					x = ram_out[14:7] + cnt_status;
-					y = ram_out[6:0] + cnt_status;		
+					x = ram_out[14:7];
+					y = ram_out[6:0];		
 				end		
 			end
 			else
@@ -171,8 +177,13 @@ module datapath(
 			plotEn = 1;
 			
 		end
+		if (check_inc)
+		begin
+			inc_length = foodTotal == head;
+		end
 		if (draw_curr)
 		begin
+
 			plotEn = 1;
 			x = curr[14:7] + cnt_status/3;
 			y = curr[6:0] + cnt_status%3;
@@ -188,9 +199,6 @@ module datapath(
 			x = food_x + 1;
 			y = food_y + 1;
 		end
-		if (check_inc)
-		begin
-			inc_length = foodTotal == head;
-		end
+		
 	end
 endmodule 
