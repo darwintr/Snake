@@ -1,0 +1,30 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Darwin/Desktop/School/CSC258/Snake
+vsplash
+!s110 1480050860
+!i10b 1
+!s100 1nTf^JH>:]KDBh7KeKZ470
+I6zceSn`cK2Gb9]XPjH_f00
+VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1480050855
+8splash.v
+Fsplash.v
+L0 1
+OV;L;10.4d;61
+r1
+!s85 0
+31
+!s108 1480050860.000000
+!s107 splash.v|
+!s90 -reportprogress|300|-timescale|1ns/1ns|splash.v|
+!i113 1
+o-timescale 1ns/1ns

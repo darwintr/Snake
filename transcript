@@ -1,0 +1,155 @@
+do testsplash.do
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:51:20 on Nov 24,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# ** Error: (vlog-13069) splash.v(13): near "always": syntax error, unexpected always, expecting ';'.
+# 
+# ** Error: splash.v(17): 'WAIT' already exists - must not be redefined.
+# ** Error: (vlog-13069) splash.v(17): near "next_state": syntax error, unexpected IDENTIFIER, expecting assert  or assume  or restrict .
+# 
+# ** Error: splash.v(18): 'GAMEOVER' already exists - must not be redefined.
+# ** Error: (vlog-13069) splash.v(18): near "next_state": syntax error, unexpected IDENTIFIER, expecting assert  or assume  or restrict .
+# 
+# ** Error: splash.v(25): (vlog-13205) Syntax error found in the scope following 'showGameOver'. Is there a missing '::'?
+# 
+# End time: 23:51:21 on Nov 24,2016, Elapsed time: 0:00:01
+# Errors: 6, Warnings: 0
+# ** Error: C:/altera_lite/16.0/modelsim_ase/win32aloem/vlog failed.
+# Error in macro ./testsplash.do line 2
+# C:/altera_lite/16.0/modelsim_ase/win32aloem/vlog failed.
+#     while executing
+# "vlog -timescale 1ns/1ns splash.v"
+do testsplash.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:53:48 on Nov 24,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# ** Error: (vlog-13069) splash.v(13): near "always": syntax error, unexpected always, expecting ';'.
+# 
+# ** Error: splash.v(17): 'WAIT' already exists - must not be redefined.
+# ** Error: (vlog-13069) splash.v(17): near "next_state": syntax error, unexpected IDENTIFIER, expecting assert  or assume  or restrict .
+# 
+# ** Error: splash.v(18): 'GAMEOVER' already exists - must not be redefined.
+# ** Error: (vlog-13069) splash.v(18): near "next_state": syntax error, unexpected IDENTIFIER, expecting assert  or assume  or restrict .
+# 
+# ** Error: splash.v(25): (vlog-13205) Syntax error found in the scope following 'showGameOver'. Is there a missing '::'?
+# 
+# End time: 23:53:48 on Nov 24,2016, Elapsed time: 0:00:00
+# Errors: 6, Warnings: 0
+# ** Error: C:/altera_lite/16.0/modelsim_ase/win32aloem/vlog failed.
+# Error in macro ./testsplash.do line 2
+# C:/altera_lite/16.0/modelsim_ase/win32aloem/vlog failed.
+#     while executing
+# "vlog -timescale 1ns/1ns splash.v"
+do testsplash.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:54:05 on Nov 24,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# ** Error: splash.v(16): (vlog-2110) Illegal reference to net "next_state".
+# 
+# ** Error: splash.v(17): (vlog-2110) Illegal reference to net "next_state".
+# 
+# ** Error: splash.v(18): (vlog-2110) Illegal reference to net "next_state".
+# 
+# ** Error: splash.v(36): (vlog-2110) Illegal reference to net "curr_state".
+# 
+# ** Error: splash.v(42): (vlog-2110) Illegal reference to net "curr_state".
+# 
+# End time: 23:54:06 on Nov 24,2016, Elapsed time: 0:00:01
+# Errors: 5, Warnings: 0
+# ** Error: C:/altera_lite/16.0/modelsim_ase/win32aloem/vlog failed.
+# Error in macro ./testsplash.do line 2
+# C:/altera_lite/16.0/modelsim_ase/win32aloem/vlog failed.
+#     while executing
+# "vlog -timescale 1ns/1ns splash.v"
+do testsplash.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:54:23 on Nov 24,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# 
+# Top level modules:
+# 	splash
+# End time: 23:54:23 on Nov 24,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim splash 
+# Start time: 23:54:23 on Nov 24,2016
+# Loading work.splash
+do testsplash.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:56:38 on Nov 24,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# 
+# Top level modules:
+# 	splash
+# End time: 23:56:38 on Nov 24,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 23:56:41 on Nov 24,2016, Elapsed time: 0:02:18
+# Errors: 0, Warnings: 0
+# vsim splash 
+# Start time: 23:56:41 on Nov 24,2016
+# Loading work.splash
+do testsplash.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:58:27 on Nov 24,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# 
+# Top level modules:
+# 	splash
+# End time: 23:58:27 on Nov 24,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 23:58:29 on Nov 24,2016, Elapsed time: 0:01:48
+# Errors: 0, Warnings: 0
+# vsim splash 
+# Start time: 23:58:29 on Nov 24,2016
+# Loading work.splash
+do testsplash.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:59:08 on Nov 24,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# 
+# Top level modules:
+# 	splash
+# End time: 23:59:08 on Nov 24,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# End time: 23:59:11 on Nov 24,2016, Elapsed time: 0:00:42
+# Errors: 0, Warnings: 0
+# vsim splash 
+# Start time: 23:59:11 on Nov 24,2016
+# Loading work.splash
+do testsplash.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 00:14:20 on Nov 25,2016
+# vlog -reportprogress 300 -timescale 1ns/1ns splash.v 
+# -- Compiling module splash
+# 
+# Top level modules:
+# 	splash
+# End time: 00:14:21 on Nov 25,2016, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# End time: 00:14:25 on Nov 25,2016, Elapsed time: 0:15:14
+# Errors: 0, Warnings: 0
+# vsim splash 
+# Start time: 00:14:26 on Nov 25,2016
+# Loading work.splash
+# End time: 00:19:47 on Nov 25,2016, Elapsed time: 0:05:21
+# Errors: 0, Warnings: 0
