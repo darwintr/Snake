@@ -11,7 +11,7 @@ module splash(
 	wire curr_state, next_state
 
 	always @(*)
-	begin: stateTable
+	begin
 		case (curr_state)
 			TITLE: next_state = start ? TITLE : WAIT;
 			WAIT: next_state = isDead ? GAMEOVER : WAIT;
@@ -20,12 +20,12 @@ module splash(
 	end
 
 	always @(*)
-	begin: stateTable
-		showTitle <= 0;
-		showGameOver <= 0;
+	begin
+		showTitle = 0;
+		showGameOver = 0;
 		case (curr_state)
-			TITLE: showTitle <= 1;
-			GAMEOVER: showGameOver <= 1;
+			TITLE: showTitle = 1;
+			GAMEOVER: showGameOver = 1;
 		endcase
 	end
 
