@@ -1,4 +1,4 @@
-
+`include "DecimalCounter.v"
 `include "SnakeFSM.v"
 `include "SnakeDatapath.v"
 `include "Movement.v"
@@ -12,37 +12,45 @@ module snakeInterface(
 	output [6:0] y_out,
 	output [2:0] colour_out,
 	output plot,
-	output reg [3:0] HEX0, HEX1, HEX2, HEX3,
-	output [9:0] LEDR
+	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out,
+	output ledr_out
 );
+	wire lock;
 	wire gameClock;
-	//DIRECTIONAL DATA.
-	wire fromBlack = 1'b1; //THIS IS THE ENABLE 
-							//Signal for draw black.
-	reg [7:0] head_x;
-	reg [6:0] head_y;
-	wire [3:0] cnt_status;
-	wire [2:0] dirContOut;
-	wire [14:0] head;
+	wire fromBlack = 1'b1; 
 	wire isDead;	
 
-	assign LEDR[0] = isDead;
-	always @(*) begin
-		head_x = head[14:7];
-		head_y = head[6:0];
-		HEX3 = head_x[7:4];
-		HEX2 = head_x[3:0];
-		HEX1 = {1'b0, head_y[6:4]};
-		HEX0 = head_y[3:0];
-	end
+	
+
+
+	decimalTimer outputTimer(
+		secondsClock,
+		rst,
+		hex0_out, hex1_out, hex2_out, hex3_out
+	);
+
+	rate_divider secondsTick (
+		clk,
+		rst,
+		32'd100,		
+		//32'd50_000_000,
+		secondsClock
+	);
+
+	wire [31:0] upperLim = 32'd50_000_000/(hex3_out * 100 +hex2_out *10 + hex1_out + 3);
 
 	rate_divider gameTick (
 		clk,
 		rst,
 		32'd100,
-		//32'd10_000_000, 
+		//upperLim,
 		gameClock
 	);
+
+
+	//PRIVATE FIELDS, NO TOUCHY.
+	wire [3:0] cnt_status;
+	wire [2:0] dirContOut;
 
 	dirControl dirModule(
 		.clk(clk),
@@ -100,10 +108,14 @@ module snakeInterface(
 		plot,	
 		x_out,
 		y_out,
-		head,
 		length_inc
 	);
+
+	assign ledr_out = isDead;
 endmodule
+
+
+
 
 module rate_divider(
 	input clk,

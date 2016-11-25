@@ -30,7 +30,7 @@ module controlMovement(
 	reg [4:0] curr_state, next_state;
 	reg [10:0] length;
 	wire cnt_le_l = counter < length - 1;
-	wire draw_le_3 = drawCounter < 8;
+	wire draw_le_3 = drawCounter < 15;
 	localparam 
 		LD_HEAD = 5'd0,
 		LD_DEF = 5'd1,
@@ -129,7 +129,6 @@ module controlMovement(
 				length <= length + 1;
 
 
-			
 
 		end
 	end

@@ -1,7 +1,7 @@
 `include "SnakeBackend.v"
 //RESETN = SW[0]
 
-//KEY[3:0] will be directions. UP DOWN LEFT RIGHT
+//KEY[3:0] will be directions. LEFT UP DOWN RIGHT
 
 //COLOR is SW[9:7](Changes body color, head will always be red)
 
@@ -87,11 +87,11 @@ module snake
 		.x_out(x),
 		.y_out(y),
 		.plot(writeEn),
-		.HEX0(HEX0_out),
-		.HEX1(HEX1_out),
-		.HEX2(HEX2_out),
-		.HEX3(HEX3_out),
-		.LEDR(LEDR)
+		.hex0_out(HEX0_out),
+		.hex1_out(HEX1_out),
+		.hex2_out(HEX2_out),
+		.hex3_out(HEX3_out),
+		.ledr_out(LEDR[0])
 		);
 	
 		

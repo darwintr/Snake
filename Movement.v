@@ -19,7 +19,7 @@ module dirControl(
 			dirOut <= 3'b0;
 		else
 		begin
-			if (input1 == 1'b0 && dirOut[2:1] != 2'b11)
+			if (input3 == 1'b0 && dirOut[2:1] != 2'b11)
 			begin
 				dirOut[1] <= 0;
 				dirOut[2] <= 1;
@@ -31,7 +31,7 @@ module dirControl(
 				dirOut[2] <= 1;
 				lockVal <= 1;
 			end
-			if (input3 == 1'b0 && dirOut[2] != 0 && dirOut[0] != 1)
+			if (input1 == 1'b0 && dirOut[2] != 0 && dirOut[0] != 1)
 			begin
 				dirOut[0] <= 0;
 				dirOut[2] <= 0;
