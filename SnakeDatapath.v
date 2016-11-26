@@ -28,6 +28,11 @@ module datapath(
 	
 	output reg inc_length
 );
+	localparam defPrev = 16'b1000_0000_0000_0000;
+
+
+
+	reg [15:0] prevDrawValue;
 	wire [14:0] ram_out;
 	reg [14:0] ram_in;
 	reg ram_wren;
@@ -67,6 +72,7 @@ module datapath(
 			x_counter <= 0;
 			y_counter <= 0;
 			anicond <= 0;
+			prevDrawValue <= defPrev;
 		end
 		else begin
 			if (ld_head)
@@ -77,13 +83,13 @@ module datapath(
 					if (dir[1])
 					begin
 						head[6:0] <= head[6:0] + 7'd4;
-						if (head[6:0] > 120)
+						if (head[6:0] > 116)
 							head[6:0] <= 0;
 					end
 					else
 					begin
 						head[6:0] <= head[6:0] - 7'd4;
-						if (head[6:0] > 7'd120)
+						if (head[6:0] > 7'd116)
 							head[6:0] <= 7'd116;
 						
 					end
@@ -133,7 +139,7 @@ module datapath(
 				food_x <= temp_food_x;
 				food_y <= temp_food_y;
 			end
-			if (address == 0 && head == foodTotal)
+			if (head == foodTotal)
 				anicond <= 1;
 			if (food_en)
 				anicond <= 0;
@@ -156,24 +162,15 @@ module datapath(
 		end
 		if (draw_q)
 		begin
-
-			// if (anicond)
-			// begin
-			// 	if (cnt_status != 3'd2 && cnt_status != 3'd3 && cnt_status != 8)
-			// 	begin
-			// 		x = ram_out[14:7] + cnt_status/4;
-			// 		y = ram_out[6:0] + cnt_status%4;
-			// 	end
-			// 	else
-			// 	begin
-			// 		x = ram_out[14:7];
-			// 		y = ram_out[6:0];		
-			// 	end		
-			// end
-	
-			x = ram_out[14:7] + cnt_status/4;
-			y = ram_out[6:0] + cnt_status%4;
-
+			if (anicond && address == 0)
+			begin
+				x= ram_out[14:7] 
+			end
+			else
+			begin
+				x = ram_out[14:7] + cnt_status/4;
+				y = ram_out[6:0] + cnt_status%4;
+			end
 			plotEn = 1;
 			
 		end
@@ -196,8 +193,16 @@ module datapath(
 		if (food_en)
 		begin
 			plotEn = 1;
-			x = food_x + cnt_status/4;
-			y = food_y + cnt_status%4;
+			if (
+				cnt_status != 3'd0 ||
+				cnt_status != 3'd3 ||
+				cnt_status != 3'd12 ||
+				cnt_status != 3'd15 
+			)
+			begin
+				x = food_x + cnt_status/4;
+				y = food_y + cnt_status%4;
+			end
 		end
 		
 	end

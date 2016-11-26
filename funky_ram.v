@@ -88,9 +88,9 @@ module funky_ram (
 		altsyncram_component.clock_enable_input_a = "BYPASS",
 		altsyncram_component.clock_enable_output_a = "BYPASS",
 `ifdef NO_PLI
-		altsyncram_component.init_file = "../../Users/Darwin/Desktop/School/CSC258/Snake/funky.rif"
+		altsyncram_component.init_file = "funky.rif"
 `else
-		altsyncram_component.init_file = "../../Users/Darwin/Desktop/School/CSC258/Snake/funky.hex"
+		altsyncram_component.init_file = "funky.hex"
 `endif
 ,
 		altsyncram_component.intended_device_family = "Cyclone V",
