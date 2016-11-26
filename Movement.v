@@ -27,6 +27,7 @@ module dirControl(
 			end
 			if (input2 == 1'b0 && dirOut[2:1] != 2'b10)
 			begin
+				
 				dirOut[1] <= 1;
 				dirOut[2] <= 1;
 				lockVal <= 1;
