@@ -31,13 +31,13 @@ module dirControl(
 				dirOut[2] <= 1;
 				lockVal <= 1;
 			end
-			if (input1 == 1'b0 && dirOut[2] != 0 && dirOut[0] != 1)
+			if (~input1  & dirOut[2]  & ~dirOut[0])
 			begin
 				dirOut[0] <= 0;
 				dirOut[2] <= 0;
 				lockVal <= 1;
 			end
-			if (input4 == 1'b0 && dirOut[2] != 0 && dirOut[0] != 0)
+			if (~input4 & dirOut[2] & dirOut[0])
 			begin
 				dirOut[0] <= 1;
 				dirOut[2] <= 0;
