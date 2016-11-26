@@ -12,8 +12,8 @@ module DrawBlack(
 	
 	wire [2:0] red, black, title_ram_out;
 	wire red_wren, black_wren, title_wren;
-	reg [14:0] address;
-	
+	wire [14:0] address;
+
 	assign red = 3'b100;
 	assign black = 0;
 
@@ -34,7 +34,9 @@ module DrawBlack(
 		begin
 			count_x <= 0;
 			count_y <= 0;
-			address <= 0;
+			x <= 0;
+			y <= 0;
+			colourOut <= 0;
 		end
 		else begin
 			if (count_x > 159)

@@ -3,7 +3,6 @@
 `include "SnakeDatapath.v"
 `include "Movement.v"
 `include "splash.v"
-`include "DrawScreen.v"
 
 module snakeInterface(
 	input [3:0] dirInControl,
@@ -60,7 +59,7 @@ module snakeInterface(
 		fromBlack
 	);
 	
-	DrawBlack db(
+	DrawBlack(
 		clk,
 		rst,
 		showTitle,
