@@ -109,6 +109,11 @@ module datapath(
 					end
 				end
 			end
+			if (draw_q)
+				prevDrawValue <= {1'b0,curr};
+			else
+				prevDrawValue <= defPrev;
+				
 			if (inc_address)
 				address <= address + 1;
 			if (rst_address)
@@ -145,7 +150,9 @@ module datapath(
 				anicond <= 0;
 		end
 	end
+	wire headAniSquares = 2 <= cnt_status && cnt_status <= 5 || cnt_status == 8 || cnt_status == 9 || cnt_status > 13;
 	
+
 	always @(*) begin
 		ram_in = 0;
 		ram_wren = 0;
@@ -162,9 +169,14 @@ module datapath(
 		end
 		if (draw_q)
 		begin
+
 			if (anicond && address == 0)
 			begin
-				x= ram_out[14:7] 
+				if (headAniSquares)
+				begin
+				 	x = ram_out[14:7] + cnt_status/4;
+					y = ram_out[6:0] + cnt_status%4;
+				end 
 			end
 			else
 			begin
