@@ -37,7 +37,7 @@ module snakeInterface(
 		secondsClock
 	);
 
-	wire [31:0] upperLim = 32'd50_000_000/(hex3_out * 100 +hex2_out *10 + hex1_out + 3);
+	wire [31:0] upperLim = 32'd50_000_000/32'd4 - hex2_out << 32'd11;
 
 	rate_divider gameTick (
 		clk,
