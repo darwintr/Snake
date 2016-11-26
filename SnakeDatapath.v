@@ -28,11 +28,7 @@ module datapath(
 	
 	output reg inc_length
 );
-	localparam defPrev = 16'b1000_0000_0000_0000;
-
-
-
-	reg [15:0] prevDrawValue;
+	
 	wire [14:0] ram_out;
 	reg [14:0] ram_in;
 	reg ram_wren;
@@ -72,7 +68,6 @@ module datapath(
 			x_counter <= 0;
 			y_counter <= 0;
 			anicond <= 0;
-			prevDrawValue <= defPrev;
 		end
 		else begin
 			if (ld_head)
@@ -109,11 +104,7 @@ module datapath(
 					end
 				end
 			end
-			if (draw_q)
-				prevDrawValue <= {1'b0,curr};
-			else
-				prevDrawValue <= defPrev;
-				
+
 			if (inc_address)
 				address <= address + 1;
 			if (rst_address)
