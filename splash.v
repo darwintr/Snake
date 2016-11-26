@@ -24,8 +24,8 @@ module splash(
 		case (curr_state)
 			TITLE: next_state = start ? TITLE : DRAWBLACK;
 			WAIT: next_state = isDead ? DRAWRED : WAIT;
-			DRAWBLACK: next_state = counter == 100 ? WAIT : DRAWBLACK;
-			DRAWRED: next_state = counter == 100 ? GAMEOVER : DRAWRED;
+			DRAWBLACK: next_state = counter == 19119 ? WAIT : DRAWBLACK;
+			DRAWRED: next_state = counter == 19119 ? GAMEOVER : DRAWRED;
 			GAMEOVER: next_state = ~start ? TITLE : GAMEOVER;
 		endcase
 	end
