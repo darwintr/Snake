@@ -7,7 +7,7 @@ add wave {/*}
 
 force {clk} 0 0 ns, 1 1 ns -r 2 ns
 force {rst} 1 0 ns, 0 1 ns, 1 2 ns
-force {isDead} 0 0ns, 1 100ns
-force {start} 1 0ns, 0 55ns
+force {start} 1 0ns, 0 55ns, 1 60ns
+force {isDead} 0 0ns, 1 1000ns
 
-run 200 ns
+run 2000 ns

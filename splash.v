@@ -5,45 +5,42 @@ module splash(
 		input start,
 		output reg showTitle,
 		output reg drawBlack,
-		output reg showGameOver
+		output reg showGameOver,
+		output reg go
 	);
 	
 	localparam
-		TITLE = 2'b00, 
-		WAIT = 2'b01, 
-		GAMEOVER = 2'b10,
-		DRAWBLACK = 2'b11;
+		TITLE = 3'b000, 
+		WAIT = 3'b001, 
+		GAMEOVER = 3'b010,
+		DRAWBLACK = 3'b011,
+		DRAWRED = 3'b100;
 
-	reg [1:0] curr_state, next_state;
+	reg [2:0] curr_state, next_state;
 	reg [14:0] counter; 				//19119
 
 	always @(*)
 	begin
 		case (curr_state)
-			TITLE: next_state = start ? TITLE : WAIT;
-			WAIT: next_state = isDead ? GAMEOVER : WAIT;
-			DRAWBLACK: next_state = counter == 19119 ? GAMEOVER : DRAWBLACK;
-			GAMEOVER: next_state = start ? TITLE : GAMEOVER;
+			TITLE: next_state = start ? TITLE : DRAWBLACK;
+			WAIT: next_state = isDead ? DRAWRED : WAIT;
+			DRAWBLACK: next_state = counter == 100 ? WAIT : DRAWBLACK;
+			DRAWRED: next_state = counter == 100 ? GAMEOVER : DRAWRED;
+			GAMEOVER: next_state = ~start ? TITLE : GAMEOVER;
 		endcase
 	end
 
 	always @(*)
 	begin
-		showTitle = 0;
+		go = 0;
+		drawBlack = 0;
 		showGameOver = 0;
+		showTitle = 0;
 		case (curr_state)
-			TITLE: 
-			begin
-				showTitle = 1;
-				drawBlack = 0;
-			end
-			GAMEOVER: 
-			begin 
-				showGameOver = 1;
-				drawBlack = 0;
-			end
+			TITLE: showTitle = 1;
 			DRAWBLACK: drawBlack = 1;
-			default drawBlack = 0;
+			WAIT: go = 1;
+			DRAWRED: showGameOver = 1;
 		endcase
 	end
 
@@ -52,14 +49,16 @@ module splash(
 		if (!rst)
 		begin
 			curr_state <= TITLE;
+			counter <= 0;
 		end
 		else
 		begin
 			curr_state <= next_state;
-			if (counter == 19119)
+			if (counter == 100)
 				counter <= 0;
 			else
-				counter <= counter + 1;
+				if (curr_state == DRAWBLACK || curr_state == DRAWRED)
+					counter <= counter + 1;
 		end
 	end
 
