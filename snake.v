@@ -1,4 +1,4 @@
-`include "SnakeBackend.v"
+`include "Backend.v"
 //RESETN = SW[0]
 
 //KEY[3:0] will be directions. LEFT UP DOWN RIGHT
@@ -81,7 +81,7 @@ module snake
 	snakeInterface si(
 		.dirInControl(KEY[3:0]),
 		.clk(CLOCK_50),
-		.reset_n(rst),
+		.rst(rst),
 		.colour_in(SW[9:7]),
 		.colour_out(colour),
 		.x_out(x),

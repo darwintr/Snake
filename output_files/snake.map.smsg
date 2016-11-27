@@ -1,0 +1,5 @@
+Warning (10268): Verilog HDL information at SnakeFSM.v(137): always construct contains both blocking and non-blocking assignments File: W:/Snake-master (2)/Snake-master/SnakeFSM.v Line: 137
+Info (10281): Verilog HDL Declaration information at SnakeFSM.v(11): object "ld_head" differs only in case from object "LD_HEAD" in the same scope File: W:/Snake-master (2)/Snake-master/SnakeFSM.v Line: 11
+Info (10281): Verilog HDL Declaration information at SnakeFSM.v(17): object "update_head" differs only in case from object "UPDATE_HEAD" in the same scope File: W:/Snake-master (2)/Snake-master/SnakeFSM.v Line: 17
+Info (10281): Verilog HDL Declaration information at SnakeFSM.v(23): object "draw_curr" differs only in case from object "DRAW_CURR" in the same scope File: W:/Snake-master (2)/Snake-master/SnakeFSM.v Line: 23
+Info (10281): Verilog HDL Declaration information at splash.v(7): object "drawBlack" differs only in case from object "DRAWBLACK" in the same scope File: W:/Snake-master (2)/Snake-master/splash.v Line: 7
