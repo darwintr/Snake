@@ -1,8 +1,8 @@
-`include "DecimalCounter.v"
-`include "SnakeFSM.v"
-`include "SnakeDatapath.v"
-`include "Movement.v"
-
+`include "HighScore/DecimalCounter.v"
+`include "SnakeLogic/SnakeFSM.v"
+`include "SnakeLogic/SnakeDatapath.v"
+`include "SnakeLogic/Movement.v"
+`include "HighScore/highscoreSystem.v"
 module snakeInterface(
 	input [3:0] dirInControl,
 	input clk,
@@ -15,18 +15,25 @@ module snakeInterface(
 	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out,
 	output ledr_out
 );
+
+	assign hex0_out = 0;
+	assign hex1_out = 0;
+
+
 	wire lock;
 	wire gameClock;
 	wire fromBlack = 1'b1; 
 	wire isDead;	
-
+	wire [12:0] shiftVal;
 	
+	highscoreSystem highScores(
 
+	);
 
 	decimalTimer outputTimer(
 		secondsClock,
 		rst,
-		hex0_out, hex1_out, hex2_out, hex3_out
+		shiftVal
 	);
 
 	rate_divider secondsTick (
@@ -37,7 +44,7 @@ module snakeInterface(
 		secondsClock
 	);
 
-	wire [31:0] upperLim = 32'd50_000_000/32'd4 - hex2_out << 32'd11;
+	wire [31:0] upperLim = 32'd50_000_000/32'd4 - shiftVal << 32'd11;
 
 	rate_divider gameTick (
 		clk,

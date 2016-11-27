@@ -1,4 +1,4 @@
-`include "ram.v"
+`include "SnakeRam/ram.v"
 module datapath(
 	input clk,
 	input rst,
@@ -197,10 +197,10 @@ module datapath(
 		begin
 			plotEn = 1;
 			if (
-				cnt_status != 3'd0 ||
-				cnt_status != 3'd3 ||
-				cnt_status != 3'd12 ||
-				cnt_status != 3'd15 
+				cnt_status != 4'd0 ||
+				cnt_status != 4'd3 ||
+				cnt_status != 4'd12 ||
+				cnt_status != 4'd15 
 			)
 			begin
 				x = food_x + cnt_status/4;
