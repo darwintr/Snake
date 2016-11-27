@@ -1,8 +1,0 @@
-
-State Machine - |snake|snakeInterface:si|splash:sp|curr_state
-Name curr_state.DRAWBLACK curr_state.GAMEOVER curr_state.WAIT curr_state.TITLE curr_state.DRAWRED 
-curr_state.TITLE 0 0 0 0 0 
-curr_state.WAIT 0 0 1 1 0 
-curr_state.GAMEOVER 0 1 0 1 0 
-curr_state.DRAWBLACK 1 0 0 1 0 
-curr_state.DRAWRED 0 0 0 1 1 
