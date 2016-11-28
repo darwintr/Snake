@@ -45,7 +45,7 @@ module DrawBlack (
 		end
 		else begin
 			if (showTitle || showGameOver || flash || showBlack)
-			address <= address + 1;
+				address <= address + 1;
 		end
 	end
 
@@ -62,5 +62,7 @@ module DrawBlack (
 			colourOut = title_ram_out == 1'b100 ? black : title_ram_out;
 		x = address % 8'd160;
 		y = address / 8'd160;
+		if (address >= 16'd19119)
+			address = 0;
 	end
 endmodule
