@@ -15,13 +15,13 @@ module DrawBlack(
 	reg [14:0] address;
 	
 	assign red = 3'b100;
-	assign black = 0;
+	assign black = 3'b0;
 
 	ram_title title (
 		.address(address),
 		.clock(clk),
-		.data(0),
-		.wren(0),
+		.data(3'b0),
+		.wren(1'b0),
 		.q(title_ram_out)
 		);
 

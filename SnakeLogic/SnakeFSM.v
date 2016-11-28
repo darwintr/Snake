@@ -22,7 +22,8 @@ module controlMovement(
 	output reg [2:0] colour_out,
 	output reg draw_curr,
 	output reg food_en,
-	output reg inc_length_check
+	output reg inc_length_check,
+	output reg reset_ram
 );	
 	
 	reg [10:0] counter;
@@ -128,8 +129,11 @@ module controlMovement(
 			if (length_inc)
 				length <= length + 1;
 
+			if (isDead)
+			begin
+				length <= 11'd3;
 
-
+			end
 		end
 	end
 
@@ -150,8 +154,13 @@ module controlMovement(
 		draw_curr = 0;
 		food_en = 0;
 		inc_length_check = 0;
+		reset_ram = 0;
 		case (curr_state)
-			LD_HEAD : ld_head = 1;
+			LD_HEAD:
+			begin 
+				ld_head = 1;
+				rst_address = 1;
+			end
 			LD_DEF : ld_q_def = 1;
 			INC1: inc_address = 1;
 			RST1: rst_address = 1;
@@ -186,8 +195,12 @@ module controlMovement(
 				colour_out = 3'b010;
 			end
 			INC_LENGTH: inc_length_check = 1;
+			CLOCK2: ld_q_into_curr = 1;
 			WAIT_BLACK:
-				rst_address = 1;
+			begin
+				inc_address = 1;
+				reset_ram = 1;
+			end
 		endcase
 	end
 

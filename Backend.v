@@ -1,14 +1,16 @@
-
+`include "TitleScreen/DrawScreen.v"
 `include "HighScore/DecimalCounter.v"
 `include "SnakeLogic/SnakeFSM.v"
 `include "SnakeLogic/SnakeDatapath.v"
 `include "SnakeLogic/Movement.v"
 `include "HighScore/highscoreSystem.v"
+`include "TitleScreen/splash.v"
+
 
 module snakeInterface(
 	input [3:0] dirInControl,
 	input clk,
-	input rst,
+	input rst,  
 	input [2:0] colour_in,
 	output [7:0] x_out,
 	output [6:0] y_out,
@@ -19,12 +21,11 @@ module snakeInterface(
 );
 
 	assign hex0_out = 0;
-	assign hex1_out = 0;
 
 
 	wire lock;
 	wire gameClock;
-	wire fromBlack; 
+	wire fromBlack = 1; 
 	wire isDead;	
 	wire [12:0] shiftVal;
 	
@@ -41,8 +42,8 @@ module snakeInterface(
 	rate_divider secondsTick (
 		clk,
 		rst,
-		//32'd100,		
-		32'd50_000_000,
+		32'd100,		
+		//32'd50_000_000,
 		secondsClock
 	);
 
@@ -51,32 +52,11 @@ module snakeInterface(
 	rate_divider gameTick (
 		clk,
 		rst,
-		//32'd100,
-		upperLim,
+		32'd100,
+		//upperLim,
 		gameClock
 	);
 	
-	splash sp(
-		clk,
-		rst,
-		isDead,
-		start,
-		showTitle,
-		showBlack,
-		showGameOver,
-		fromBlack
-	);
-	
-	DrawBlack db(
-		clk,
-		rst,
-		showTitle,
-		showBlack,
-		showGameOver,
-		x_out,
-		y_out,
-		colour_out
-	);
 
 
  	//PRIVATE FIELDS, NO TOUCHY.
@@ -113,7 +93,8 @@ module snakeInterface(
 		colour_out,
 		draw_curr,
 		food_en,
-		check_inc
+		check_inc,
+		reset_ram
 	);
 
 	datapath dp(
@@ -135,6 +116,7 @@ module snakeInterface(
 		draw_curr,
 		food_en,
 		dirContOut,
+		reset_ram,
 		isDead, //TIS THE DEAD SIGNAL!
 		plot,	
 		x_out,
