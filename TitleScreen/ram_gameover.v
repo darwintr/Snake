@@ -4,7 +4,7 @@
 // MODULE: altsyncram 
 
 // ============================================================
-// File Name: ram_title.v
+// File Name: ram_gameover.v
 // Megafunction Name(s):
 // 			altsyncram
 //
@@ -37,7 +37,7 @@
 // synopsys translate_off
 `timescale 1 ps / 1 ps
 // synopsys translate_on
-module ram_title (
+module ram_gameover (
 	address,
 	clock,
 	data,
@@ -87,7 +87,12 @@ module ram_title (
 	defparam
 		altsyncram_component.clock_enable_input_a = "BYPASS",
 		altsyncram_component.clock_enable_output_a = "BYPASS",
-		altsyncram_component.init_file = "image.colour.hex",
+`ifdef NO_PLI
+		altsyncram_component.init_file = "gameover.rif"
+`else
+		altsyncram_component.init_file = "gameover.hex"
+`endif
+,
 		altsyncram_component.intended_device_family = "Cyclone V",
 		altsyncram_component.lpm_hint = "ENABLE_RUNTIME_MOD=NO",
 		altsyncram_component.lpm_type = "altsyncram",
@@ -126,7 +131,7 @@ endmodule
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "0"
 // Retrieval info: PRIVATE: JTAG_ID STRING "NONE"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
-// Retrieval info: PRIVATE: MIFfilename STRING "../../Users/Darwin/Desktop/School/CSC258/Snake/TitleScreen/image.colour.mif"
+// Retrieval info: PRIVATE: MIFfilename STRING "../../Users/Darwin/Desktop/School/CSC258/Snake/TitleScreen/gameover.hex"
 // Retrieval info: PRIVATE: NUMWORDS_A NUMERIC "32768"
 // Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC "0"
 // Retrieval info: PRIVATE: READ_DURING_WRITE_MODE_PORT_A NUMERIC "3"
@@ -143,7 +148,7 @@ endmodule
 // Retrieval info: LIBRARY: altera_mf altera_mf.altera_mf_components.all
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
-// Retrieval info: CONSTANT: INIT_FILE STRING "../../Users/Darwin/Desktop/School/CSC258/Snake/TitleScreen/image.colour.mif"
+// Retrieval info: CONSTANT: INIT_FILE STRING "../../Users/Darwin/Desktop/School/CSC258/Snake/TitleScreen/gameover.hex"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone V"
 // Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=NO"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
@@ -166,10 +171,10 @@ endmodule
 // Retrieval info: CONNECT: @data_a 0 0 3 0 data 0 0 3 0
 // Retrieval info: CONNECT: @wren_a 0 0 0 0 wren 0 0 0 0
 // Retrieval info: CONNECT: q 0 0 3 0 @q_a 0 0 3 0
-// Retrieval info: GEN_FILE: TYPE_NORMAL ram_title.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL ram_title.inc FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL ram_title.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL ram_title.bsf FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL ram_title_inst.v FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL ram_title_bb.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL ram_gameover.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL ram_gameover.inc FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL ram_gameover.cmp FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL ram_gameover.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL ram_gameover_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL ram_gameover_bb.v FALSE
 // Retrieval info: LIB_FILE: altera_mf

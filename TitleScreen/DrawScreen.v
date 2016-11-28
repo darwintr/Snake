@@ -1,19 +1,20 @@
 `include "ram_title.v"
-module DrawBlack(
+`include "ram_gameover.v"
+module DrawBlack (
 		input clk,
 		input rst,
 		input showTitle,
 		input showBlack,
 		input showGameOver,
+		input flash,
 		output reg [7:0] x,
 		output reg [6:0] y,
 		output reg [2:0] colourOut
 	);
 	
-	wire [2:0] red, black, title_ram_out;
-	wire red_wren, black_wren, title_wren;
+	wire [2:0] red, black, title_ram_out, gameover_ram_out;
 	reg [14:0] address;
-	
+
 	assign red = 3'b100;
 	assign black = 3'b0;
 
@@ -25,26 +26,23 @@ module DrawBlack(
 		.q(title_ram_out)
 		);
 
-	reg [7:0] count_x;
-	reg [6:0] count_y;
+	ram_gameover gameover (
+		.address(address),
+		.clock(clk),
+		.data(3'b0),
+		.wren(1'b0),
+		.q(gameover_ram_out)
+		);
 
 	always @(posedge clk, negedge rst)
 	begin
 		if (!rst)
 		begin
-			count_x <= 0;
-			count_y <= 0;
 			address <= 0;
 		end
 		else begin
-			if (count_x > 159)
-			begin
-				count_x <= 0;
-				count_y <= count_y + 1;
-			end
-			else
-				count_x <= count_x + 1;
-			address <= {count_x, count_y};
+			if (showTitle || showGameOver || flash)
+			address <= address + 1;
 		end
 	end
 
@@ -56,7 +54,9 @@ module DrawBlack(
 			colourOut = black;
 		else if (showTitle)
 			colourOut = title_ram_out;
-		x = count_x;
-		y = count_y;
+		else if (flash)
+			colourOut = title_ram_out == 1'b100 ? black : title_ram_out;
+		x = address % 8'd160;
+		y = address / 8'd160;
 	end
 endmodule
