@@ -6,6 +6,9 @@ module highscoreSystem(
 );
 	reg [11:0] curr_score;
 	
+	
+
+		
 	always @(posedge increment, negedge rst)
 	begin
 		if (!rst)

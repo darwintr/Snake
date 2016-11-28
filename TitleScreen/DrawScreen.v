@@ -55,7 +55,7 @@ module DrawBlack (
 		else if (showTitle)
 			colourOut = title_ram_out;
 		else if (flash)
-			colourOut = title_ram_out == 1'b100 ? black : title_ram_out;
+			colourOut = title_ram_out == 3'b100 ? black : title_ram_out;
 		x = address % 8'd160;
 		y = address / 8'd160;
 	end

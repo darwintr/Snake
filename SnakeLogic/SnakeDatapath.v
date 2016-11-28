@@ -48,6 +48,7 @@ module datapath(
 		.q(ram_out)
 	);
 
+
 	wire [7:0] def_x = 8'd60;
 	wire [6:0] def_y = 7'd60;
 
