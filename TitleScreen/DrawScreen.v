@@ -1,5 +1,6 @@
 `include "ram_title.v"
 `include "ram_gameover.v"
+
 module DrawBlack (
 		input clk,
 		input rst,
@@ -14,6 +15,8 @@ module DrawBlack (
 	
 	wire [2:0] red, black, title_ram_out, gameover_ram_out;
 	reg [14:0] address;
+
+
 
 	assign red = 3'b100;
 	assign black = 3'b0;
@@ -41,13 +44,14 @@ module DrawBlack (
 			address <= 0;
 		end
 		else begin
-			if (showTitle || showGameOver || flash)
-			address <= address + 1;
+			if (showTitle || showGameOver || flash || showBlack)
+				address <= address + 1;
 		end
 	end
 
 	always @(*)
 	begin
+		colourOut = black;
 		if (showGameOver)
 			colourOut = red;
 		else if (showBlack)
@@ -58,5 +62,7 @@ module DrawBlack (
 			colourOut = title_ram_out == 3'b100 ? black : title_ram_out;
 		x = address % 8'd160;
 		y = address / 8'd160;
+		if (address >= 16'd19119)
+			address = 0;
 	end
 endmodule

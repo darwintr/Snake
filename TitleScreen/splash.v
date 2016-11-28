@@ -27,11 +27,11 @@ module splash(
 	always @(*)
 	begin
 		case (curr_state)
-			DRAWTITLE: next_state = counter == 100 ? TITLE : DRAWTITLE;
+			DRAWTITLE: next_state = counter == 19119 ? TITLE : DRAWTITLE;
 			TITLE: next_state = start ? TITLE : DRAWBLACK;
 			WAIT: next_state = isDead ? DRAWRED : WAIT;
-			DRAWBLACK: next_state = counter == 100 ? WAIT : DRAWBLACK;
-			DRAWGAMEOVER: next_state = counter == 100 ? GAMEOVERWAIT : DRAWGAMEOVER;
+			DRAWBLACK: next_state = counter == 19119 ? WAIT : DRAWBLACK;
+			DRAWGAMEOVER: next_state = counter == 19119 ? GAMEOVERWAIT : DRAWGAMEOVER;
 			GAMEOVERWAIT:
 			begin
 				if (~start)
@@ -41,7 +41,7 @@ module splash(
 			 	else
 			 		next_state = GAMEOVERWAIT;
 			end 
-			DRAWRED: next_state = counter == 100 ? GAMEOVERFLASH : DRAWRED;
+			DRAWRED: next_state = counter == 19119 ? GAMEOVERFLASH : DRAWRED;
 			GAMEOVERFLASH:
 			begin
 				if (~start)
@@ -80,7 +80,7 @@ module splash(
 		else
 		begin
 			curr_state <= next_state;
-			if (counter == 100)
+			if (counter == 19119)
 				counter <= 0;
 			else
 				if (curr_state == DRAWBLACK || curr_state == DRAWGAMEOVER ||
