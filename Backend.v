@@ -39,7 +39,7 @@ module snakeInterface(
 			rst,
 			isDead,
 			&dirInControl,
-			gameClock,
+			secondsClock,
 			showTitle,
 			drawBlack,
 			showGameOver,

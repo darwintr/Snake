@@ -8,6 +8,7 @@ module DrawBlack (
 		input showBlack,
 		input showGameOver,
 		input flash,
+		input reset_ad,
 		output reg [7:0] x,
 		output reg [6:0] y,
 		output reg [2:0] colourOut
@@ -19,7 +20,7 @@ module DrawBlack (
 
 
 	assign red = 3'b100;
-	assign black = 3'b0;
+	assign black = 3'b000;
 
 	ram_title title (
 		.address(address),
@@ -47,7 +48,7 @@ module DrawBlack (
 			if (showTitle || showGameOver || flash || showBlack)
 				address <= address + 1;
 		end
-		if (address == 15'd19119)
+		if (address == 15'd19119 || reset_ad)
 			address <= 15'b0;
 	end
 

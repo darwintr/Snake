@@ -158,7 +158,7 @@ module datapath(
 
 	reg [2:0] remain;
 	reg remainCounter; 
-	always @(posedge clk, negedge rst)
+	always @(posedge clk)
 	begin
 		if (!rst || bodyAniSquares || remain[0])
 			remainCounter <= 0;
