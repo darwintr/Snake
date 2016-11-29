@@ -2,7 +2,6 @@
 module controlMovement(
 	input clk,
 	input rst,
-	input [2:0] colour_in,
 	input length_inc,
 	input go,
 	input fromBlack,
@@ -19,7 +18,6 @@ module controlMovement(
 	output reg ld_q_into_curr,
 	output reg ld_prev_into_q,
 	output reg ld_curr_into_prev,
-	output reg [2:0] colour_out,
 	output reg draw_curr,
 	output reg food_en,
 	output reg inc_length_check,
@@ -150,7 +148,6 @@ module controlMovement(
 		ld_q_into_curr = 0;
 		ld_prev_into_q = 0;
 		ld_curr_into_prev = 0;
-		colour_out = 3'b0;
 		draw_curr = 0;
 		food_en = 0;
 		inc_length_check = 0;
@@ -167,12 +164,6 @@ module controlMovement(
 			DRAW_WHITE: begin 
 				draw_q = 1;
 				cnt_status = drawCounter;
-				if (counter == 0) begin
-					colour_out <= 3'b100;
-				end
-				else begin
-					colour_out <= colour_in;
-				end
 			end
 			INC2: inc_address = 1;
 			RST2: rst_address = 1;
@@ -192,7 +183,6 @@ module controlMovement(
 			DRAW_FOOD: begin
 				food_en = 1;
 				cnt_status = drawCounter;
-				colour_out = 3'b010;
 			end
 			INC_LENGTH: inc_length_check = 1;
 			CLOCK2: ld_q_into_curr = 1;

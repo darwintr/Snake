@@ -4,7 +4,7 @@ module datapath(
 	input rst,
 	input lock,
 	input check_inc,
-
+    input [2:0] colour_in,
 	input ld_head,
 	input ld_q_def,
 	input inc_address,
@@ -25,7 +25,7 @@ module datapath(
 	output reg plotEn,
 	output reg [7:0] x,
 	output reg [6:0] y,
-	
+	output reg [2:0] colour_out,
 	output reg inc_length
 );
 	
@@ -152,7 +152,7 @@ module datapath(
 				anicond <= 0;
 		end
 	end
-	wire headAniSquares = 2 <= cnt_status && cnt_status <= 5 || cnt_status == 8 || cnt_status == 9 || cnt_status > 13;
+
 	
 	wire bodyAniSquares = cnt_status == 5 || cnt_status == 6 || cnt_status == 9 || cnt_status == 10;
 
@@ -195,6 +195,7 @@ module datapath(
 	end
 	localparam REMAIN0 = 2'b00, REMAIN1 = 2'b01, REMAIN2 = 2'b10, REMAIN3 = 2'b11;
 
+
 	always @(*) begin
 		ram_in = 0;
 		ram_wren = 0;
@@ -202,7 +203,7 @@ module datapath(
 		x = 0;
 		y = 0;
 		inc_length = 0;
-
+		colour_out = 0;
 
 		if (ld_q_def)
 		begin
@@ -214,12 +215,16 @@ module datapath(
 
 			if (anicond && address == 0)
 			begin
-				if (headAniSquares)
-				begin
-				 	x = ram_out[14:7] + cnt_status%4;
+			 	x = ram_out[14:7] + cnt_status%4;
+			 	if (cnt_status == 1 || cnt_status == 4 || cnt_status == 5)
+					y = ram_out[6:0] + cnt_status/4 - 1;
+				else if (cnt_status == 8 || cnt_status == 9 || cnt_status == 13)
+					y = ram_out[6:0] + cnt_status/4 + 1;
+				else
 					y = ram_out[6:0] + cnt_status/4;
+				if (!(cnt_status == 0 || cnt_status == 3 || cnt_status == 12 || cnt_status == 15))
 					plotEn = 1;
-				end 
+				colour_out = cnt_status == 3'd5 ? 3'b100 : 3'b010;
 			end
 			else
 			begin
@@ -227,7 +232,9 @@ module datapath(
 				begin
 					x = ram_out[14:7] + cnt_status%4;
 					y = ram_out[6:0] + cnt_status/4;
-					plotEn = 1;
+					if (!(cnt_status == 0 || cnt_status == 3 || cnt_status == 12 || cnt_status == 15))
+						plotEn = 1;
+					colour_out = 3'b010;
 				end
 				else if (address != 0) begin
 					case (remain[2:1])
@@ -272,17 +279,12 @@ module datapath(
 		end
 		if (food_en)
 		begin
-			plotEn = 1;
-			if (
-				cnt_status != 4'd0 ||
-				cnt_status != 4'd3 ||
-				cnt_status != 4'd12 ||
-				cnt_status != 4'd15 
-			)
-			begin
-				x = food_x + cnt_status%4;
-				y = food_y + cnt_status/4;
-			end
+			if (cnt_status == 4 || cnt_status == 5 || cnt_status == 8 || cnt_status == 9)
+				plotEn = 1;
+		
+			x = food_x + cnt_status%4;
+			y = food_y + cnt_status/4;
+			colour_out = 3'b001;
 		end
 		if (reset_ram)
 		begin
