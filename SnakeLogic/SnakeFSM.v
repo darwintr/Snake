@@ -127,7 +127,7 @@ module controlMovement(
 			curr_state <= next_state;
 
 			if (length_inc)
-				length <= length + 1;
+				length <= length + 5;
 
 			if (isDead)
 			begin

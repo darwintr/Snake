@@ -12,9 +12,9 @@ module snakeInterface(
 	input clk,
 	input rst,  
 	input [2:0] colour_in,
-	output [7:0] x_out,
-	output [6:0] y_out,
-	output [2:0] colour_out,
+	output reg [7:0] x_out,
+	output reg [6:0] y_out,
+	output reg [2:0] colour_out,
 	output plot,
 	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out, hex5_out
 	output ledr_out
@@ -22,13 +22,43 @@ module snakeInterface(
 
 	assign hex0_out = 0;
 
+	wire [7:0] snake_x_out, dbx;
+	wire [6:0] snake_y_out, dby;
+
 
 	wire lock;
 	wire gameClock;
-	wire fromBlack = 1; 
+	wire fromBlack; 
 	wire isDead;	
 	wire [12:0] shiftVal;
-	
+
+
+	splash splasher(
+			clk,
+			rst,
+			isDead,
+			lock,
+			gameClock,
+			showTitle,
+			drawBlack,
+			showGameOver,
+			flash,
+			fromBlack,
+			splasherWren
+		);
+
+	DrawBlack drawBlack(
+			clk,
+			rst,
+			showTitle,
+			drawBlack
+			showGameOver,
+			flash,
+			dbx,
+			dby,
+			dbcolour
+		);
+
 	highscoreSystem highScores(
 		rst,
 		length_inc,
@@ -95,7 +125,7 @@ module snakeInterface(
 		ld_q_into_curr,
 		ld_prev_into_q,
 		ld_curr_into_prev,
-		colour_out,
+		snake_colour_out,
 		draw_curr,
 		food_en,
 		check_inc,
@@ -123,12 +153,31 @@ module snakeInterface(
 		dirContOut,
 		reset_ram,
 		isDead, //TIS THE DEAD SIGNAL!
-		plot,	
-		x_out,
-		y_out,
+		snake_plot,	
+		snake_x_out,
+		snake_y_out,
 		length_inc
 	);
 
+	assign plot = snake_plot | splasherWren;
+
+	always @(*)
+	begin
+
+		if (snake_plot)
+		begin
+			x_out = snake_x_out;
+			y_out = snake_y_out;
+			colour_out = snake_colour_out;
+		end
+
+		if (splasherWren)
+		begin
+			x_out = dbx;
+			y_out = dby;
+			colour_out = dbcolour;
+		end
+	end
 	
 	assign ledr_out = isDead; 
 endmodule

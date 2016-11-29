@@ -62,8 +62,8 @@ module datapath(
 			curr <= 0;
 			prev <= 0;
 			head <= 0;
-			food_x <= 8'd60;
-			food_y <= 7'd56;
+			food_x <= 8'd30;
+			food_y <= 7'd26;
 			isDead <= 0;
 			temp_food_x <= 0;
 			temp_food_y <= 0;
@@ -109,7 +109,10 @@ module datapath(
 					end
 				end
 			end
-
+			if (reset_ram)
+			begin
+				isDead <= 0;
+			end
 
 			if (inc_address)
 				address <= address + 1;
