@@ -10,6 +10,7 @@ module splash(
 		output reg flash,
 		output reg go,
 		output reg reset_ad,
+		output reg [3:0] state,
 		output reg wren
 	);
 	localparam
@@ -23,7 +24,7 @@ module splash(
 		GAMEOVERFLASH = 4'b0111,
 		RESTARTWAIT = 4'b1000;
 
-	reg [2:0] curr_state, next_state;
+	reg [3:0] curr_state, next_state;
 	reg [14:0] counter; 				//19119
 	localparam IBELIEVEINMYCODE = 32'd19119;
 	always @(*)
