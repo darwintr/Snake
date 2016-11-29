@@ -16,7 +16,7 @@ module snakeInterface(
 	output [6:0] y_out,
 	output [2:0] colour_out,
 	output plot,
-	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out,
+	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out, hex5_out
 	output ledr_out
 );
 
@@ -30,7 +30,12 @@ module snakeInterface(
 	wire [12:0] shiftVal;
 	
 	highscoreSystem highScores(
-
+		rst,
+		length_inc,
+		hex1_out,
+		hex2_out,
+		hex3_out,
+		hex5_out
 	);
 
 	decimalTimer outputTimer(

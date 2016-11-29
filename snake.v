@@ -25,6 +25,7 @@ module snake
 		HEX1,
 		HEX2,
 		HEX3,
+		HEX5,
 		LEDR
 	);
 
@@ -43,7 +44,7 @@ module snake
 	output	[9:0]	VGA_G;	 				//	VGA Green[9:0]
 	output	[9:0]	VGA_B;   				//	VGA Blue[9:0]
 	output  [9:0]   LEDR;
-	output  [6:0] HEX0, HEX1, HEX2, HEX3;
+	output  [6:0] HEX0, HEX1, HEX2, HEX3, HEX5;
 	wire [2:0] colour;
 	//RESET
 	wire rst = SW[0];
@@ -74,7 +75,7 @@ module snake
 	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot
 	// for the VGA controller, in addition to any other functionality your design may require.
 	
-	wire [3:0] HEX0_out, HEX1_out, HEX2_out, HEX3_out;
+	wire [3:0] HEX0_out, HEX1_out, HEX2_out, HEX3_out, HEX5_out;
 	wire [7:0] x;
 	wire [6:0] y;
 	
@@ -91,9 +92,13 @@ module snake
 		.hex1_out(HEX1_out),
 		.hex2_out(HEX2_out),
 		.hex3_out(HEX3_out),
+		.hex5_out(HEX5_out),
 		.ledr_out(LEDR[0])
 		);
-	
+	hex_decoder_with_u u0(
+		HEX5_out,
+		HEX5
+	);
 		
 	hex_decoder u1(
 		HEX0_out,
@@ -115,6 +120,21 @@ module snake
 		HEX3
 	);
 endmodule
+
+
+module hex_decoder_with_u(hex_digit, segments);
+    input [3:0] hex_digit;
+    output reg [6:0] segments;
+   
+    always @(*)
+        case (hex_digit)
+            4'h0: segments = 7'b100_0001;
+            4'h1: segments = 7'b111_1001;
+            4'h2: segments = 7'b010_0100;
+            4'h3: segments = 7'b011_0000;   
+            default: segments = 7'h7f;
+        endcase
+endmodule 
 
 module hex_decoder(hex_digit, segments);
     input [3:0] hex_digit;
