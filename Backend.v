@@ -71,6 +71,7 @@ module snakeInterface(
 	decimalTimer outputTimer(
 		secondsClock,
 		rst,
+		reset_ram,
 		shiftVal
 	);
 
