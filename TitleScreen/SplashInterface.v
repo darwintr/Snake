@@ -75,7 +75,7 @@ module SplashInterface
 	rate_divider rd(
 		CLOCK_50,
 		rst,
-		32'd25_000_000,
+		32'd50_000_000,
 		tick
 	);
 	
@@ -90,6 +90,7 @@ module SplashInterface
 		showGameOver,
 		flash,
 		go,
+		reset_ad,
 		wren
 		);
 
@@ -100,6 +101,7 @@ module SplashInterface
 		drawBlack,
 		showGameOver,
 		flash,
+		reset_ad,
 		x,
 		y,
 		colour

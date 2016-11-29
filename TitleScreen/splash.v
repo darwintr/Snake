@@ -9,6 +9,7 @@ module splash(
 		output reg showGameOver,
 		output reg flash,
 		output reg go,
+		output reg reset_ad,
 		output reg wren
 	);
 	localparam
@@ -29,7 +30,7 @@ module splash(
 	begin
 		case (curr_state)
 			DRAWTITLE: next_state = counter == IBELIEVEINMYCODE ? TITLE : DRAWTITLE;
-			TITLE: next_state = ~start ? TITLE : DRAWBLACK;
+			TITLE: next_state = start ? TITLE : DRAWBLACK;
 			WAIT: next_state = isDead ? DRAWGAMEOVER : WAIT;
 			DRAWBLACK: next_state = counter == IBELIEVEINMYCODE ? WAIT : DRAWBLACK;
 			DRAWGAMEOVER: next_state = counter == IBELIEVEINMYCODE ? GAMEOVERWAIT : DRAWGAMEOVER;
@@ -64,6 +65,7 @@ module splash(
 		showTitle = 0;
 		flash = 0;
 		wren = 0;
+		reset_ad = 0;
 		case (curr_state)
 			DRAWTITLE:
 			begin
@@ -86,6 +88,7 @@ module splash(
 				showGameOver = 1;
 				wren = 1;
 			end
+			RESTARTWAIT: reset_ad = 1;
 		endcase
 	end
 
@@ -99,7 +102,8 @@ module splash(
 		else
 		begin
 			curr_state <= next_state;
-			if (counter == IBELIEVEINMYCODE)
+			if (counter == IBELIEVEINMYCODE || curr_state == RESTARTWAIT ||
+				curr_state == WAIT)
 				counter <= 0;
 			else
 				if (curr_state == DRAWBLACK || curr_state == DRAWGAMEOVER ||
