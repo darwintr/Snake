@@ -19,7 +19,7 @@ module DrawBlack (
 
 
 	assign red = 3'b100;
-	assign black = 3'b0;
+	assign black = 3'b000;
 
 	ram_title title (
 		.address(address),
@@ -63,7 +63,7 @@ module DrawBlack (
 		else if (flash)
 			colourOut = gameover_ram_out == 1'b100 ? black : gameover_ram_out;
 		x = address % 8'd160;
-		y = address / 8'd160;
-		
+		y = address / 8'd160;	
 	end
+	
 endmodule

@@ -12,16 +12,17 @@ module splash(
 		output reg wren
 	);
 	localparam
-		TITLE = 3'b000, 
-		WAIT = 3'b001, 
-		GAMEOVERWAIT = 3'b010,
-		DRAWBLACK = 3'b011,
-		DRAWGAMEOVER = 3'b100,
-		DRAWRED = 3'b101,
-		DRAWTITLE = 3'b110,
-		GAMEOVERFLASH = 3'b111;
+		TITLE = 4'b0000, 
+		WAIT = 4'b0001, 
+		GAMEOVERWAIT = 4'b0010,
+		DRAWBLACK = 4'b0011,
+		DRAWGAMEOVER = 4'b0100,
+		DRAWRED = 4'b0101,
+		DRAWTITLE = 4'b0110,
+		GAMEOVERFLASH = 4'b0111
+		RESTARTWAIT = 4'b1000;
 
-	reg [2:0] curr_state, next_state;
+	reg [3:0] curr_state, next_state;
 	reg [14:0] counter; 				//19119
 	localparam IBELIEVEINMYCODE = 32'd19119;
 	always @(*)
@@ -35,7 +36,7 @@ module splash(
 			GAMEOVERWAIT:
 			begin
 				if (~start)
-			 		next_state = DRAWTITLE;
+			 		next_state = RESTARTWAIT;
 			 	else if (tick)
 			 		next_state = DRAWRED;
 			 	else
@@ -45,12 +46,13 @@ module splash(
 			GAMEOVERFLASH:
 			begin
 				if (~start)
-			 		next_state = DRAWTITLE;
+			 		next_state = RESTARTWAIT;
 			 	else if (tick)
 			 		next_state = DRAWGAMEOVER;
 			 	else
 			 		next_state = GAMEOVERFLASH;
 			end
+			RESTARTWAIT: next_state = start ? DRAWTITLE : RESTARTWAIT;
 		endcase
 	end
 
@@ -69,7 +71,7 @@ module splash(
 				wren = 1;
 			end
 			DRAWBLACK:
-		   begin
+		    begin
 				drawBlack = 1;
 				wren = 1;
 			end
@@ -87,7 +89,7 @@ module splash(
 		endcase
 	end
 
-	always @(posedge clk, negedge rst)
+	always @(posedge clk)
 	begin
 		if (!rst)
 		begin
@@ -105,5 +107,4 @@ module splash(
 					counter <= counter + 1;
 		end
 	end
-
 endmodule
