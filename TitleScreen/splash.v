@@ -8,11 +8,8 @@ module splash(
 		output reg drawBlack,
 		output reg showGameOver,
 		output reg flash,
-		output reg go,
-		output reg reset_ad,
-		output reg [3:0] state,
-		output reg wren
-	);
+		output reg go
+		);
 	localparam
 		TITLE = 4'b0000, 
 		WAIT = 4'b0001, 
@@ -26,7 +23,7 @@ module splash(
 
 	reg [3:0] curr_state, next_state;
 	reg [14:0] counter; 				//19119
-	localparam IBELIEVEINMYCODE = 32'd19119;
+	localparam IBELIEVEINMYCODE = 32'd32767;
 	always @(*)
 	begin
 		case (curr_state)
@@ -65,31 +62,26 @@ module splash(
 		showGameOver = 0;
 		showTitle = 0;
 		flash = 0;
-		wren = 0;
-		reset_ad = 0;
+		
 		case (curr_state)
 			DRAWTITLE:
 			begin
 				showTitle = 1;
-				wren = 1;
 			end
 			DRAWBLACK:
-		   begin
+			begin
 				drawBlack = 1;
-				wren = 1;
 			end
 			DRAWRED:
 			begin 
 				flash = 1;
-				wren = 1;
 			end
 			WAIT: go = 1;
 			DRAWGAMEOVER: 
 			begin
 				showGameOver = 1;
-				wren = 1;
+				
 			end
-			RESTARTWAIT: reset_ad = 1;
 		endcase
 	end
 
@@ -103,13 +95,10 @@ module splash(
 		else
 		begin
 			curr_state <= next_state;
-			if (counter == IBELIEVEINMYCODE || curr_state == RESTARTWAIT ||
-				curr_state == WAIT)
+			if (curr_state == RESTARTWAIT || curr_state == WAIT)
 				counter <= 0;
-			else
-				if (curr_state == DRAWBLACK || curr_state == DRAWGAMEOVER ||
-						curr_state == DRAWRED || curr_state == DRAWTITLE)
-					counter <= counter + 1;
+			else if (curr_state == DRAWBLACK || curr_state == DRAWGAMEOVER || curr_state == DRAWRED || curr_state == DRAWTITLE)
+				counter <= counter + 1;
 		end
 	end
 

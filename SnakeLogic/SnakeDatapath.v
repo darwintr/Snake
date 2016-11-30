@@ -62,8 +62,8 @@ module datapath(
 			curr <= 0;
 			prev <= 0;
 			head <= 0;
-			food_x <= 8'd30;
-			food_y <= 7'd26;
+			food_x <= 8'd28;
+			food_y <= 7'd28;
 			isDead <= 0;
 			temp_food_x <= 0;
 			temp_food_y <= 0;
@@ -154,46 +154,6 @@ module datapath(
 	end
 
 	
-	wire bodyAniSquares = cnt_status == 5 || cnt_status == 6 || cnt_status == 9 || cnt_status == 10;
-
-	reg [2:0] remain;
-	reg remainCounter; 
-	always @(posedge clk)
-	begin
-		if (!rst || bodyAniSquares || remain[0])
-			remainCounter <= 0;
-		else
-			remainCounter <= remainCounter + 1;
-	end
-
-	always @(*) begin
-		remain = 3'b0;
-		if (address != 0)
-		begin
-			if (ram_out[14:7] > curr[14:7])
-			begin
-				remain[0] = cnt_status == 4 || cnt_status == 8;
-				remain[2:1] = 2'b00;
-			end
-			else if (ram_out[14:7] < curr[14:7])
-			begin
-				remain[0] = cnt_status == 7 || cnt_status == 11;
-				remain[2:1] = 2'b01;
-			end
-			else if (ram_out[6:0] > curr[6:0])
-			begin
-				remain[0] = cnt_status == 1 || cnt_status == 2;
-				remain[2:1] = 2'b10;
-			end
-			else if (ram_out[6:0] < curr[6:0])
-			begin
-				remain[0] = cnt_status == 13 || cnt_status == 14;
-				remain[2:1] = 2'b11;
-			end
-
-		end
-	end
-	localparam REMAIN0 = 2'b00, REMAIN1 = 2'b01, REMAIN2 = 2'b10, REMAIN3 = 2'b11;
 
 
 	always @(*) begin
@@ -213,51 +173,24 @@ module datapath(
 		if (draw_q)
 		begin
 
-			if (anicond && address == 0)
+			if (address == 0)
 			begin
-			 	x = ram_out[14:7] + cnt_status%4;
-			 	if (cnt_status == 1 || cnt_status == 4 || cnt_status == 5)
-					y = ram_out[6:0] + cnt_status/4 - 1;
-				else if (cnt_status == 8 || cnt_status == 9 || cnt_status == 13)
-					y = ram_out[6:0] + cnt_status/4 + 1;
-				else
-					y = ram_out[6:0] + cnt_status/4;
-				if (!(cnt_status == 0 || cnt_status == 3 || cnt_status == 12 || cnt_status == 15))
-					plotEn = 1;
-				colour_out = cnt_status == 3'd5 ? 3'b100 : 3'b010;
+				x = ram_out[14:7] + cnt_status%4;
+				y = ram_out[6:0] + cnt_status/4;
+				plotEn = 1;
+
+				colour_out = anicond ? 3'b011 : 3'b010;
 			end
-			else
-			begin
-				if (bodyAniSquares || remain[0])
-				begin
-					x = ram_out[14:7] + cnt_status%4;
-					y = ram_out[6:0] + cnt_status/4;
-					if (!(cnt_status == 0 || cnt_status == 3 || cnt_status == 12 || cnt_status == 15))
-						plotEn = 1;
-					colour_out = 3'b010;
-				end
-				else if (address != 0) begin
-					case (remain[2:1])
-						REMAIN0 : begin
-							x = ram_out[14:7] - 8'd1;
-							y = remainCounter ? ram_out[6:0] + 7'd1 : ram_out[6:0] + 7'd2;
-						end 
-						REMAIN1 : begin
-							x = ram_out[14:7] + 8'd4;
-							y = remainCounter ? ram_out[6:0] + 7'd1 : ram_out[6:0] + 7'd2;
-						end
-						REMAIN2 : begin
-							x = remainCounter ? ram_out[14:7] + 8'd1 : ram_out[14:7] + 8'd2;
-							y = ram_out[6:0] - 7'd1;
-						end
-						REMAIN3 : begin
-							x = remainCounter ? ram_out[14:7] + 8'd1 : ram_out[14:7] + 8'd2;
-							y = ram_out[6:0] + 7'd4;
-						end
-					endcase
+			else begin
+				
+				x = ram_out[14:7] + cnt_status%4;
+				y = ram_out[6:0] + cnt_status/4;
+				if (curr[15] != 1)
 					plotEn = 1;
-				end
+
+				colour_out = colour_in;
 			end
+		
 			
 			
 		end
@@ -279,12 +212,12 @@ module datapath(
 		end
 		if (food_en)
 		begin
-			if (cnt_status == 4 || cnt_status == 5 || cnt_status == 8 || cnt_status == 9)
+			if (cnt_status == 5 || cnt_status == 6 || cnt_status == 9 || cnt_status == 10)
 				plotEn = 1;
 		
 			x = food_x + cnt_status%4;
 			y = food_y + cnt_status/4;
-			colour_out = 3'b001;
+			colour_out = {food_x[4:3], 1'b1};
 		end
 		if (reset_ram)
 		begin
