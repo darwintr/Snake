@@ -28,8 +28,6 @@ module highscoreSystem(
 		begin
 			if (curr_score > first)
 			begin
-
-				num1 <= 1;
 				if (first != second)
 					first <= second;
 			end
@@ -37,12 +35,10 @@ module highscoreSystem(
 			begin
 				if (third != second)
 					third <= second;
-				num2 <= 1;
 			end
 			else if (curr_score > third)
 			begin
 				third <= curr_score;
-				num3 <= 1;
 			end
 
 		end
