@@ -10,38 +10,18 @@ module highscoreSystem(
 	reg [10:0] curr_score;
 	
 	reg [10:0] first;
-	reg [10:0] second;
-	reg [10:0] third;
 	reg [10:0] displayVal;
 
-	reg num1, num2, num3;
 
 	always @(posedge clk, negedge rst)
 	begin
 		if (!rst)
 		begin
 			first <= 0;
-			second <= 0;
-			third <= 0;
 		end
-		else if (isDead)
-		begin
-			if (curr_score > first)
-			begin
-				if (first != second)
-					first <= second;
-			end
-			else if (curr_score > second)
-			begin
-				if (third != second)
-					third <= second;
-			end
-			else if (curr_score > third)
-			begin
-				third <= curr_score;
-			end
+		else if (curr_score > first)
+			first <= curr_score;		
 
-		end
 	end
 
 	always @(posedge increment, negedge rst)
@@ -69,10 +49,10 @@ module highscoreSystem(
 		case (decider)
 			self: displayVal = curr_score;
 			one: displayVal = first;
-			two: displayVal = second;
-			three: displayVal = third; 
+			two: displayVal = curr_score;
+			three: displayVal = first; 
 		endcase
-		hex5_out = {2'b0, decider};
+		hex5_out = {3'b0, decider[0]};
 		hex0_out = 0;
 		hex1_out = displayVal%10;
 		hex2_out = (displayVal/10)%10;
