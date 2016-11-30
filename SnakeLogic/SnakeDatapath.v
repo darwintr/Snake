@@ -133,7 +133,7 @@ module datapath(
 			if (x_counter > 8'd156)
 				x_counter <= 0;
 
-			if (y_counter > 7'd120)
+			if (y_counter > 7'd116)
 				y_counter <= 0;
 
 			if (lock)
