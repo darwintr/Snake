@@ -20,9 +20,6 @@ module snakeInterface(
 	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out, hex5_out,
 	output ledr_out
 );
-
-	assign hex0_out = 0;
-
 	wire [7:0] snake_x_out, dbx;
 	wire [6:0] snake_y_out, dby;
 	wire [2:0] snake_colour_out, dbcolour;
@@ -31,7 +28,7 @@ module snakeInterface(
 	wire gameClock;
 	wire fromBlack; 
 	wire isDead;	
-	wire [12:0] shiftVal;
+	wire [31:0] shiftVal;
 	wire drawBlack;
 
 	splash splasher(
@@ -44,8 +41,7 @@ module snakeInterface(
 			drawBlack,
 			showGameOver,
 			flash,
-			fromBlack,
-			splasherWren
+			fromBlack
 		);
 
 	DrawBlack dbu(
@@ -55,6 +51,7 @@ module snakeInterface(
 			drawBlack,
 			showGameOver,
 			flash,
+			splasherWren,
 			dbx,
 			dby,
 			dbcolour
@@ -62,18 +59,21 @@ module snakeInterface(
 
 	highscoreSystem highScores(
 		SW[2:1],
-		length_inc,
+		clk,
 		rst,
-		
+		isDead,
+		length_inc,
+		hex0_out,
 		hex1_out,
 		hex2_out,
 		hex3_out,
 		hex5_out
 	);
-
+	wire reset_ram;
 	decimalTimer outputTimer(
 		secondsClock,
 		rst,
+		~reset_ram,
 		shiftVal
 	);
 
@@ -85,7 +85,7 @@ module snakeInterface(
 		secondsClock
 	);
 
-	wire [31:0] upperLim = 32'd10_000_000;
+	wire [31:0] upperLim = 32'd10_000_000 - shiftVal;
 
 	rate_divider gameTick (
 		clk,
@@ -112,7 +112,6 @@ module snakeInterface(
 	controlMovement control(
 		clk,
 		rst,
-		colour_in,
 		length_inc, 
 		gameClock,
 		fromBlack,
@@ -128,7 +127,6 @@ module snakeInterface(
 		ld_q_into_curr,
 		ld_prev_into_q,
 		ld_curr_into_prev,
-		snake_colour_out,
 		draw_curr,
 		food_en,
 		check_inc,
@@ -140,6 +138,7 @@ module snakeInterface(
 		rst,
 		lock,
 		check_inc,
+		colour_in,
 		ld_head,
 		ld_q_def,
 		inc_address,
@@ -159,6 +158,7 @@ module snakeInterface(
 		snake_plot,	
 		snake_x_out,
 		snake_y_out,
+		snake_colour_out,
 		length_inc
 	);
 

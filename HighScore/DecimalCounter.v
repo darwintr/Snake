@@ -2,7 +2,7 @@ module decimalTimer(
 	input clk,
 	input rst,
 	input en,
-	output reg [12:0] shiftVal
+	output reg [31:0] shiftVal
 );
 
 	reg [12:0] count;
@@ -16,9 +16,15 @@ module decimalTimer(
 		end
 		else begin
 			if (en)
+			begin	
+				if (count%30 == 0)
+					shiftVal <= shiftVal + 32'd100000;
 				count <= count + 1;
-			if (count%30 == 0)
-				shiftVal <= shiftVal + 1;
+			end
+			else begin
+				shiftVal <= 0;
+				count <= 0;
+			end
 		end
 	end
 
