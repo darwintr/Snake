@@ -1,4 +1,4 @@
-`include "Backend.v"
+`include "Interface.v"
 //RESETN = SW[0]
 
 //KEY[3:0] will be directions. LEFT UP DOWN RIGHT
@@ -6,7 +6,7 @@
 //COLOR is SW[9:7](Changes body color, head will always be red)
 
 
-module snake
+module Snake
 	(
 		CLOCK_50,						//	On Board 50 MHz
 		// Your inputs and outputs here
