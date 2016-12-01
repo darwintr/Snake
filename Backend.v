@@ -17,7 +17,7 @@ module snakeInterface(
 	output reg [6:0] y_out,
 	output reg [2:0] colour_out,
 	output plot,
-	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out, hex5_out,
+	output [3:0] hex0_out, hex1_out, hex2_out, hex3_out, hex4_out, hex5_out,
 	output ledr_out
 );
 	wire [7:0] snake_x_out, dbx;
@@ -41,7 +41,8 @@ module snakeInterface(
 			drawBlack,
 			showGameOver,
 			flash,
-			fromBlack
+			fromBlack,
+			splasherWren
 		);
 
 	DrawBlack dbu(
@@ -51,7 +52,6 @@ module snakeInterface(
 			drawBlack,
 			showGameOver,
 			flash,
-			splasherWren,
 			dbx,
 			dby,
 			dbcolour
@@ -85,8 +85,26 @@ module snakeInterface(
 		secondsClock
 	);
 
-	wire [31:0] upperLim = 32'd10_000_000 - shiftVal;
+	reg [31:0] upperLim;
+	
+	always @(*)
+	begin
+		if (shiftVal == 32'd0)
+			upperLim = 32'd10_000_000;
+		else if (shiftVal == 32'd1)
+			upperLim = 32'd9_000_000;
+		else if (shiftVal == 32'd2)
+			upperLim = 32'd8_000_000;
+		else if (shiftVal == 32'd3)
+			upperLim = 32'd7_000_000;
+		else if (shiftVal == 32'd4)
+			upperLim = 32'd6_000_000;
+		else
+			upperLim = 32'd5_000_000;
 
+	end
+	
+	assign hex4_out = shiftVal;
 	rate_divider gameTick (
 		clk,
 		rst,

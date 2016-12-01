@@ -13,35 +13,26 @@ module highscoreSystem(
 	reg [10:0] displayVal;
 
 
-	always @(posedge clk, negedge rst)
+	always @(posedge clk)
 	begin
 		if (!rst)
 		begin
 			first <= 0;
+			curr_score <= 0;
 		end
 		else if (curr_score > first)
 			first <= curr_score;		
-
-	end
-
-	always @(posedge increment, negedge rst)
-	begin
-		if (!rst)
+		
+		if (isDead)
 		begin
 			curr_score <= 0;
 		end
-		else if (isDead)
-		begin
-			curr_score <= 0;
-		end
-		else
-		begin
-
-
+		
+		if (increment)
 			curr_score <= curr_score + 1;
-			
-		end
 	end
+
+
 	localparam self = 2'b00, one = 2'b01, two = 2'b10, three = 2'b11;	
 
 	always @(*)

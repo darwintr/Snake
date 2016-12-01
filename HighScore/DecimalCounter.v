@@ -17,8 +17,8 @@ module decimalTimer(
 		else begin
 			if (en)
 			begin	
-				if (count%30 == 0)
-					shiftVal <= shiftVal + 32'd100000;
+				if (count%15 == 0)
+					shiftVal <= shiftVal + 32'd1;
 				count <= count + 1;
 			end
 			else begin

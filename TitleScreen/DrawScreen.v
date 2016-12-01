@@ -8,7 +8,6 @@ module DrawBlack (
 		input showBlack,
 		input showGameOver,
 		input flash,
-		output reg wren,
 		output reg [7:0] x,
 		output reg [6:0] y,
 		output reg [2:0] colourOut
@@ -45,25 +44,26 @@ module DrawBlack (
 			address <= 15'b0;
 		end
 		else begin
-			address <= address + 1;
+			if (showTitle || showGameOver || flash || showBlack)
+				address <= address + 1;
 		end
+		if (address == 15'd19119)
+			address <= 15'b0;
 	end
 
 	always @(*)
 	begin
-		wren = 0;
 		colourOut = black;
 		if (showGameOver)
-			colourOut = gameover_ram_out;
+			colourOut = red;
 		else if (showBlack)
 			colourOut = black;
 		else if (showTitle)
 			colourOut = title_ram_out;
 		else if (flash)
-			colourOut = gameover_ram_out == 3'b100 ? black : gameover_ram_out;
+			colourOut = gameover_ram_out == 1'b100 ? black : gameover_ram_out;
 		x = address % 8'd160;
-		y = address / 8'd160;
-		if (address < 19200)
-			wren = 1;
+		y = address / 8'd160;	
 	end
+	
 endmodule
